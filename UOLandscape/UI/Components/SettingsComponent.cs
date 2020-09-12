@@ -10,7 +10,7 @@ namespace UOLandscape.UI.Components
     class SettingsComponent 
     {
         
-        public static bool IsActive = false;
+        public static bool IsActive = true;
         private static string _currentPath
         {
             get => ConfigurationSettings.GlobalSettings.UOPath;
@@ -41,6 +41,13 @@ namespace UOLandscape.UI.Components
                 {
                     ConfigurationSettings.GlobalSettings.UOPath = _inputText;
                     ConfigurationSettings.GlobalSettings.Save();
+                    
+                }
+                ImGui.SameLine();
+                if( ImGui.Button("Initialize") )
+                {
+                    UOLandscape.Client.Client.Load();
+                    IsActive = false;
                 }
 
                 ImGui.End();

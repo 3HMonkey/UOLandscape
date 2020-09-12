@@ -69,12 +69,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bootstrap.cs" />
+    <Compile Include="Client\Client.cs" />
+    <Compile Include="Client\ClientException.cs" />
+    <Compile Include="Client\ClientFlags.cs" />
+    <Compile Include="Client\ClientVersion.cs" />
+    <Compile Include="Client\ClientVersionHelper.cs" />
     <Compile Include="Configuration\ConfigurationResolver.cs" />
     <Compile Include="Configuration\ConfigurationSettings.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UI\Components\AboutWindowComponent.cs" />
-    <Compile Include="UI\Components\InitializeComponent.cs" />
     <Compile Include="UI\Components\NewProjectComponent.cs" />
     <Compile Include="UI\Components\SettingsComponent.cs" />
     <Compile Include="UI\Data\IndexData.cs" />

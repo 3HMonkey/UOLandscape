@@ -79,6 +79,7 @@ namespace UOLandscape
 
             Environment.SetEnvironmentVariable("FNA_GRAPHICS_ENABLE_HIGHDPI", "1");
 
+            
             using( var mainApp = new Main() )
             {
                 mainApp.Run();

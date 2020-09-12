@@ -15,6 +15,7 @@ namespace UOLandscape
         private Texture2D _xnaTexture;
         private IntPtr _imGuiTexture;
 
+        
         public Main()
         {
 
@@ -24,7 +25,7 @@ namespace UOLandscape
 
             _graphics = new GraphicsDeviceManager(this)
             {
-                PreferredBackBufferWidth = 1500,
+                PreferredBackBufferWidth = 1200,
                 PreferredBackBufferHeight = 768,
                 PreferMultiSampling = true,
                 IsFullScreen = false,
@@ -93,11 +94,11 @@ namespace UOLandscape
         private bool show_test_window = false;
         private Num.Vector3 clear_color = new Num.Vector3(114f / 255f, 144f / 255f, 154f / 255f);
 
-
+        
 
         protected virtual void ImGuiLayout()
         {
-            if( !InitializeComponent.IsActive )
+            if( !SettingsComponent.IsActive)
             {
                 // Menu
                 if( ImGui.BeginMainMenuBar() )
@@ -130,7 +131,7 @@ namespace UOLandscape
                     ImGui.EndMainMenuBar();
                 }
             }
-            if( InitializeComponent.IsActive ) InitializeComponent.Show(dockspaceID);
+            
             if( NewProjectComponent.IsActive ) NewProjectComponent.Show(dockspaceID);
             if( SettingsComponent.IsActive ) SettingsComponent.Show(dockspaceID);
             if( AboutWindowComponent.IsActive ) AboutWindowComponent.Show(dockspaceID);

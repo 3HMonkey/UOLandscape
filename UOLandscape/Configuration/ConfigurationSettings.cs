@@ -23,6 +23,8 @@ namespace UOLandscape.Configuration
 
         [JsonProperty("testvar")]
         public string Testvar { get; set; } = string.Empty;
+        public string ClientVersion { get; internal set; }
+        
 
         public static string GetSettingsFilepath()
         {
