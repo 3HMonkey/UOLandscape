@@ -22,6 +22,7 @@ namespace UOLandscape.UI.Components
         public static bool Show(uint dockspaceID)
         {
             ImGui.SetNextWindowDockID(dockspaceID, ImGuiCond.FirstUseEver);
+            
             if( ImGui.Begin("Settings", ref IsActive) )
             {
                 ImGui.TextUnformatted("Ultima Online Path");

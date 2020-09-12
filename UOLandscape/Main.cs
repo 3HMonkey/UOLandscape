@@ -131,12 +131,13 @@ namespace UOLandscape
                     ImGui.EndMainMenuBar();
                 }
             }
-            
+
+            if( InfoOverlayComponent.IsActive ) InfoOverlayComponent.Show();
             if( NewProjectComponent.IsActive ) NewProjectComponent.Show(dockspaceID);
             if( SettingsComponent.IsActive ) SettingsComponent.Show(dockspaceID);
             if( AboutWindowComponent.IsActive ) AboutWindowComponent.Show(dockspaceID);
 
-
+            
             //if( ImGui.Begin("GameWindow") )
             //{
             //    // Using a Child allow to fill all the space of the window.
