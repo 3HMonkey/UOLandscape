@@ -88,6 +88,7 @@
     <Compile Include="UI\Data\VertexData.cs" />
     <Compile Include="UI\DrawText.cs" />
     <Compile Include="UI\DrawVertDecleration.cs" />
+    <Compile Include="UI\Enums\Position.cs" />
     <Compile Include="UI\Exceptions\MissingLoadedTextureKeyException.cs" />
     <Compile Include="UI\Extensions\DataConvertExtensions.cs" />
     <Compile Include="UI\ImGUIRenderer.cs" />

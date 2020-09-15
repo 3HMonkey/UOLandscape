@@ -105,27 +105,32 @@ namespace UOLandscape
                 {
                     if( ImGui.BeginMenu("Menu") )
                     {
-                        if( ImGui.MenuItem("New", "Ctrl+N", false, true) ) NewProjectComponent.IsActive = !NewProjectComponent.IsActive;
+                        //if( ImGui.MenuItem("New", "Ctrl+N", false, true) ) NewProjectComponent.IsActive = !NewProjectComponent.IsActive;
                         ImGui.EndMenu();
                     }
                     if( ImGui.BeginMenu("Options") )
                     {
                         if( ImGui.MenuItem("Settings", null, false, true) ) SettingsComponent.IsActive = !SettingsComponent.IsActive;
-                        ImGui.MenuItem("New", "Ctrl+N", true, show_test_window);
-                        ImGui.MenuItem("New", "Ctrl+N", true, show_test_window);
-                        ImGui.MenuItem("New", "Ctrl+N", true, show_test_window);
-                        ImGui.MenuItem("New", "Ctrl+N", true, show_test_window);
-                        ImGui.MenuItem("New", "Ctrl+N", true, show_test_window);
-                        ImGui.MenuItem("New", "Ctrl+N", true, show_test_window);
+                        //ImGui.MenuItem("New", "Ctrl+N", true, show_test_window);
+                        //ImGui.MenuItem("New", "Ctrl+N", true, show_test_window);
+                        //ImGui.MenuItem("New", "Ctrl+N", true, show_test_window);
+                        //ImGui.MenuItem("New", "Ctrl+N", true, show_test_window);
+                        //ImGui.MenuItem("New", "Ctrl+N", true, show_test_window);
+                        //ImGui.MenuItem("New", "Ctrl+N", true, show_test_window);
 
                         ImGui.EndMenu();
                     }
                     if( ImGui.BeginMenu("Help") )
                     {
                         if( ImGui.MenuItem("About", null, false, true) ) AboutWindowComponent.IsActive = !AboutWindowComponent.IsActive;
-                        ImGui.MenuItem("New", "Ctrl+N", true, show_test_window);
-                        ImGui.MenuItem("New", "Ctrl+N", true, show_test_window);
-                        ImGui.MenuItem("New", "Ctrl+N", true, show_test_window);
+                        //ImGui.MenuItem("New", "Ctrl+N", true, show_test_window);
+                        //ImGui.MenuItem("New", "Ctrl+N", true, show_test_window);
+                        //ImGui.MenuItem("New", "Ctrl+N", true, show_test_window);
+                        ImGui.EndMenu();
+                    }
+                    if( ImGui.BeginMenu("View") )
+                    {
+                        if( ImGui.MenuItem("Info Box", null, InfoOverlayComponent.IsActive, true) ) InfoOverlayComponent.IsActive = !InfoOverlayComponent.IsActive;
                         ImGui.EndMenu();
                     }
                     ImGui.EndMainMenuBar();
@@ -137,19 +142,19 @@ namespace UOLandscape
             if( SettingsComponent.IsActive ) SettingsComponent.Show(dockspaceID);
             if( AboutWindowComponent.IsActive ) AboutWindowComponent.Show(dockspaceID);
 
-            
-            //if( ImGui.Begin("GameWindow") )
-            //{
-            //    // Using a Child allow to fill all the space of the window.
-            //    // It also alows customization
-            //    ImGui.BeginChild("GameRender");
-            //    // Get the size of the child (i.e. the whole draw size of the windows).
-            //    Num.Vector2 wsize = ImGui.GetWindowSize();
-            //    // Because I use the texture from OpenGL, I need to invert the V from the UV.
-            //    ImGui.Image(_imGuiTexture, wsize);
-            //    ImGui.EndChild();
-            //    ImGui.End();
-            //}
+
+            if( ImGui.Begin("GameWindow") )
+            {
+                // Using a Child allow to fill all the space of the window.
+                // It also alows customization
+                ImGui.BeginChild("GameRender");
+                // Get the size of the child (i.e. the whole draw size of the windows).
+                Num.Vector2 wsize = ImGui.GetWindowSize();
+                // Because I use the texture from OpenGL, I need to invert the V from the UV.
+                ImGui.Image(_imGuiTexture, wsize);
+                ImGui.EndChild();
+                ImGui.End();
+            }
 
 
 
