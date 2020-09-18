@@ -1,20 +1,28 @@
 ﻿using ImGuiNET;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using UOLandscape.Configuration;
 
 namespace UOLandscape.UI.Components
 {
-    class AboutWindowComponent
+    internal sealed class AboutWindowComponent : IAboutWindow
     {
-        public static bool IsActive = false;
+        private bool _isActive;
 
-        public static bool Show(uint dockspaceID)
+        public bool IsActive => _isActive;
+
+        public void Hide()
+        {
+            _isActive = false;
+        }
+
+        public void ToggleActive()
+        {
+            _isActive = !_isActive;
+        }
+
+        public bool Show(uint dockSpaceId)
         {
             ImGui.SetNextWindowDockID(ImGui.GetID("MyDockSpace"), ImGuiCond.FirstUseEver);
             ImGui.SetNextWindowSize(new System.Numerics.Vector2(560, 450));
-            if( ImGui.Begin("About", ref IsActive) )
+            if (ImGui.Begin("About", ref _isActive))
             {
                 ImGui.Text($@"
 UOLandscaper {UOLandscapeEnvironment.Version.ToString()}
@@ -45,10 +53,11 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with this program.If not, see < https://www.gnu.org/licenses/>."
-                                );
+                );
                 ImGui.End();
                 return true;
             }
+
             return false;
         }
     }

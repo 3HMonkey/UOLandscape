@@ -1,37 +1,46 @@
 ﻿using ImGuiNET;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.Design;
-using System.Text;
 using UOLandscape.Configuration;
 
 namespace UOLandscape.UI.Components
 {
-    class NewProjectComponent 
+    internal sealed class NewProjectComponent : INewProjectWindow
     {
-        
-        public static bool IsActive = false;
-        private static string _currentPath
+        private readonly IAppSettingsProvider _appSettingsProvider;
+
+        private bool _isActive;
+        public bool IsActive => _isActive;
+
+
+        public NewProjectComponent(IAppSettingsProvider appSettingsProvider)
         {
-            get => ConfigurationSettings.GlobalSettings.UOPath;
-            set => ConfigurationSettings.GlobalSettings.UOPath = value;
+            _appSettingsProvider = appSettingsProvider;
         }
 
-        private static string t = _currentPath;
-       
-        public static bool Show(uint dockspaceID)
+        public void Hide()
         {
-            ImGui.SetNextWindowDockID(dockspaceID, ImGuiCond.FirstUseEver);
-            
-            if( ImGui.Begin("Settings", ref IsActive) )
+            _isActive = false;
+        }
+
+        public void ToggleActive()
+        {
+            _isActive = !_isActive;
+        }
+       
+        public bool Show(uint dockspaceId)
+        {
+            ImGui.SetNextWindowDockID(dockspaceId, ImGuiCond.FirstUseEver);
+
+            if (ImGui.Begin("Settings", ref _isActive))
             {
                 ImGui.TextUnformatted("Ultima Online Path");
-                ImGui.InputText("##PathBox", ref t, 100);
 
+                var ultimaOnlinePath = _appSettingsProvider.AppSettings.UltimaOnlinePath;
+                ImGui.InputText("##PathBox", ref ultimaOnlinePath, 128);
+                _appSettingsProvider.AppSettings.UltimaOnlinePath = ultimaOnlinePath;
 
-                if( ConfigurationSettings.GlobalSettings.UOPath != null )
+                if(string.IsNullOrEmpty(_appSettingsProvider.AppSettings.UltimaOnlinePath))
                 {
-                    ImGui.TextUnformatted($"{ConfigurationSettings.GlobalSettings.UOPath}");
+                    ImGui.TextUnformatted(_appSettingsProvider.AppSettings.UltimaOnlinePath);
                 }
                 else
                 {

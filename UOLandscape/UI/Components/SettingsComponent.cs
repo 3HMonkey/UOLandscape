@@ -1,63 +1,73 @@
 ﻿using ImGuiNET;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.Design;
-using System.Text;
+using Microsoft.Extensions.Logging;
+using UOLandscape.Client;
 using UOLandscape.Configuration;
 
 namespace UOLandscape.UI.Components
 {
-    class SettingsComponent 
+    internal sealed class SettingsComponent : ISettingsWindow
     {
-        
-        public static bool IsActive = true;
-        private static string _currentPath
+        private readonly ILogger<SettingsComponent> _logger;
+        private readonly IAppSettingsProvider _appSettingsProvider;
+        private readonly IClient _client;
+
+        private bool _isActive;
+
+        public bool IsActive => _isActive;
+
+        public SettingsComponent(ILogger<SettingsComponent> logger, IAppSettingsProvider appSettingsProvider, IClient client)
         {
-            get => ConfigurationSettings.GlobalSettings.UOPath;
-            set => ConfigurationSettings.GlobalSettings.UOPath = value;
+            _logger = logger;
+            _appSettingsProvider = appSettingsProvider;
+            _client = client;
         }
 
-        private static string _inputText = _currentPath;
-       
-        public static bool Show()
+        public void Hide()
         {
-            
+            _isActive = false;
+        }
+
+        public void ToggleActive()
+        {
+            _isActive = !_isActive;
+        }
+
+        public bool Show(uint dockSpaceId)
+        {
             ImGui.SetNextWindowSize(new System.Numerics.Vector2(500, 130));
-            if( ImGui.Begin("Settings", ref IsActive, ImGuiWindowFlags.NoResize) )
+            if (ImGui.Begin("Settings", ref _isActive, ImGuiWindowFlags.NoResize))
             {
                 ImGui.TextUnformatted("Ultima Online Path");
-                ImGui.InputText("##PathBox", ref _inputText, 100);
+                var ultimaOnlinePath = _appSettingsProvider.AppSettings.UltimaOnlinePath;
+                ImGui.InputText("##PathBox", ref ultimaOnlinePath, 100);
 
-
-                if( ConfigurationSettings.GlobalSettings.UOPath != null )
+                if (string.IsNullOrEmpty(_appSettingsProvider.AppSettings.UltimaOnlinePath))
                 {
-                    ImGui.TextUnformatted($"{ConfigurationSettings.GlobalSettings.UOPath}");
+                    ImGui.TextUnformatted(_appSettingsProvider.AppSettings.UltimaOnlinePath);
                 }
                 else
                 {
                     ImGui.Text("*");
                 }
 
-                if(ImGui.Button("Save"))
+                if (ImGui.Button("Save"))
                 {
-                    ConfigurationSettings.GlobalSettings.UOPath = _inputText;
-                    ConfigurationSettings.GlobalSettings.Save();
-                    
+                    _appSettingsProvider.AppSettings.UltimaOnlinePath = ultimaOnlinePath;
+                    _appSettingsProvider.Save();
                 }
+
                 ImGui.SameLine();
-                if( ImGui.Button("Initialize") )
+                if (ImGui.Button("Initialize"))
                 {
-                    UOLandscape.Client.Client.Load();
-                    IsActive = false;
-                    
+                    _client.Load();
+                    Hide();
                 }
 
                 ImGui.End();
                 return true;
             }
+
             return false;
         }
     }
-
 }
-
