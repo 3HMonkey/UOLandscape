@@ -3,7 +3,7 @@ using UOLandscape.Configuration;
 
 namespace UOLandscape.UI.Components
 {
-    internal sealed class NewProjectComponent : INewProjectWindow
+    internal sealed class NewProjectWindow : INewProjectWindow
     {
         private readonly IAppSettingsProvider _appSettingsProvider;
 
@@ -11,7 +11,7 @@ namespace UOLandscape.UI.Components
         public bool IsActive => _isActive;
 
 
-        public NewProjectComponent(IAppSettingsProvider appSettingsProvider)
+        public NewProjectWindow(IAppSettingsProvider appSettingsProvider)
         {
             _appSettingsProvider = appSettingsProvider;
         }

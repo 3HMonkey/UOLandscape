@@ -3,7 +3,7 @@
     internal sealed class UIService : IUIService
     {
         public ISettingsWindow SettingsWindow { get; }
-        public IDockspaceWindow DockspaceWindow { get; }
+        public IDockSpaceWindow DockSpaceWindow { get; }
         public INewProjectWindow NewProjectWindow { get; }
         public IToolsWindow ToolsWindow { get; }
         public IInfoOverlayWindow InfoOverlayWindow { get; }
@@ -12,14 +12,14 @@
 
         public UIService(
             ISettingsWindow settingsWindow,
-            IDockspaceWindow dockspaceWindow,
+            IDockSpaceWindow dockSpaceWindow,
             INewProjectWindow newProjectWindow,
             IToolsWindow toolsWindow,
             IInfoOverlayWindow infoOverlayWindow,
             IAboutWindow aboutWindow)
         {
             SettingsWindow = settingsWindow;
-            DockspaceWindow = dockspaceWindow;
+            DockSpaceWindow = dockSpaceWindow;
             NewProjectWindow = newProjectWindow;
             ToolsWindow = toolsWindow;
             InfoOverlayWindow = infoOverlayWindow;

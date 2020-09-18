@@ -9,13 +9,13 @@ namespace UOLandscape.UI.Data
     /// </summary>
     public class TextureData
     {
-        public int TextureID;
-        public IntPtr? FontTextureID;
+        public int TextureId;
+        public IntPtr? FontTextureId;
         public Dictionary<IntPtr, Texture2D> Loaded;
 
-        public int GetTextureID()
+        public int GetTextureId()
         {
-            return TextureID++;
+            return TextureId++;
         }
 
         public TextureData()

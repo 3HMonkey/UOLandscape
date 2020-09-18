@@ -29,11 +29,11 @@ namespace UOLandscape
             services.AddSingleton<IAppSettingsProvider, AppSettingsProvider>();
             services.AddSingleton<IConfigurationLoader, ConfigurationLoader>();
             services.AddSingleton<IConfigurationSaver, ConfigurationSaver>();
-            services.AddSingleton<IAboutWindow, AboutWindowComponent>();
-            services.AddSingleton<IDockspaceWindow, DockSpaceComponent>();
-            services.AddSingleton<IInfoOverlayWindow, InfoOverlayComponent>();
-            services.AddSingleton<INewProjectWindow, NewProjectComponent>();
-            services.AddSingleton<ISettingsWindow, SettingsComponent>();
+            services.AddSingleton<IAboutWindow, AboutWindow>();
+            services.AddSingleton<IDockSpaceWindow, DockSpaceWindow>();
+            services.AddSingleton<IInfoOverlayWindow, InfoOverlayWindow>();
+            services.AddSingleton<INewProjectWindow, NewProjectWindow>();
+            services.AddSingleton<ISettingsWindow, SettingsWindow>();
             services.AddSingleton<IToolsWindow, ToolsWindow>();
             services.AddSingleton<IUIService, UIService>();
             services.AddSingleton<IClient, Client.Client>();

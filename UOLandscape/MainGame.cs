@@ -14,7 +14,7 @@ namespace UOLandscape
         private readonly ILogger<MainGame> _logger;
         private readonly IUIService _uiService;
         public GraphicsDeviceManager _graphics;
-        private ImGUIRenderer _imGuiRenderer;
+        private ImGuiRenderer _imGuiRenderer;
         private Texture2D _xnaTexture;
         private IntPtr _imGuiTexture;
         public static uint MainDockspaceID = 0;
@@ -46,7 +46,7 @@ namespace UOLandscape
         protected override void Initialize()
         {
             _logger.LogInformation("Initializing...");
-            _imGuiRenderer = new ImGUIRenderer(this).Initialize().RebuildFontAtlas();
+            _imGuiRenderer = new ImGuiRenderer(this).Initialize().RebuildFontAtlas();
             ImGui.GetIO().ConfigFlags = ImGuiConfigFlags.DockingEnable;
 
             _logger.LogInformation("Initializing...Done");
@@ -97,7 +97,7 @@ namespace UOLandscape
                 {
                     if (ImGui.BeginMenu("Menu"))
                     {
-                        //if( ImGui.MenuItem("New", "Ctrl+N", false, true) ) NewProjectComponent.IsActive = !NewProjectComponent.IsActive;
+                        //if( ImGui.MenuItem("New", "Ctrl+N", false, true) ) NewProjectWindow.IsActive = !NewProjectWindow.IsActive;
                         ImGui.EndMenu();
                     }
 
@@ -146,9 +146,9 @@ namespace UOLandscape
                     ImGui.EndMainMenuBar();
                 }
 
-                if (_uiService.DockspaceWindow.IsActive)
+                if (_uiService.DockSpaceWindow.IsActive)
                 {
-                    _uiService.DockspaceWindow.Show(0);
+                    _uiService.DockSpaceWindow.Show(0);
                 }
 
                 if (_uiService.InfoOverlayWindow.IsActive)

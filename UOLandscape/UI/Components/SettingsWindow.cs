@@ -5,9 +5,8 @@ using UOLandscape.Configuration;
 
 namespace UOLandscape.UI.Components
 {
-    internal sealed class SettingsComponent : ISettingsWindow
+    internal sealed class SettingsWindow : ISettingsWindow
     {
-        private readonly ILogger<SettingsComponent> _logger;
         private readonly IAppSettingsProvider _appSettingsProvider;
         private readonly IClient _client;
 
@@ -15,9 +14,10 @@ namespace UOLandscape.UI.Components
 
         public bool IsActive => _isActive;
 
-        public SettingsComponent(ILogger<SettingsComponent> logger, IAppSettingsProvider appSettingsProvider, IClient client)
+        public SettingsWindow(
+            IAppSettingsProvider appSettingsProvider,
+            IClient client)
         {
-            _logger = logger;
             _appSettingsProvider = appSettingsProvider;
             _client = client;
         }

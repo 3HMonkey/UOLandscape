@@ -5,9 +5,6 @@ using XnaVector3 = Microsoft.Xna.Framework.Vector3;
 
 namespace UOLandscape.UI.Extensions
 {
-    /// <summary>
-    /// Extends different monogame data containers with numeric-based conversions.
-    /// </summary>
     public static class DataConvertExtensions
     {
         public static XnaVector3 ToXnaVector3(this NumVector3 value)

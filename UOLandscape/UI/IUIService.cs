@@ -4,7 +4,7 @@
     {
         public ISettingsWindow SettingsWindow { get; }
 
-        public IDockspaceWindow DockspaceWindow { get; }
+        public IDockSpaceWindow DockSpaceWindow { get; }
 
         public INewProjectWindow NewProjectWindow { get; }
 

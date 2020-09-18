@@ -4,7 +4,7 @@ using Num = System.Numerics;
 
 namespace UOLandscape.UI.Components
 {
-    internal sealed class InfoOverlayComponent : IInfoOverlayWindow
+    internal sealed class InfoOverlayWindow : IInfoOverlayWindow
     {
         static Position _position = Position.TopRight;
 

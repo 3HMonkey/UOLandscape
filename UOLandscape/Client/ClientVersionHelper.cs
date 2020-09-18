@@ -3,28 +3,26 @@ using System.IO;
 
 namespace UOLandscape.Client
 {
-    static class ClientVersionHelper
+    internal static class ClientVersionHelper
     {
-        public static bool TryParseFromFile(string clientpath, out string version)
+        public static bool TryParseFromFile(string clientPath, out string version)
         {
-            if( File.Exists(clientpath) )
+            if (File.Exists(clientPath))
             {
-                FileInfo fileInfo = new FileInfo(clientpath);
-
-                DirectoryInfo dirInfo = new DirectoryInfo(fileInfo.DirectoryName);
-                if( dirInfo.Exists )
+                var fileInfo = new FileInfo(clientPath);
+                var dirInfo = new DirectoryInfo(fileInfo.DirectoryName);
+                if (dirInfo.Exists)
                 {
-                    foreach( var clientInfo in dirInfo.GetFiles("client.exe", SearchOption.TopDirectoryOnly) )
+                    foreach (var clientInfo in dirInfo.GetFiles("client.exe", SearchOption.TopDirectoryOnly))
                     {
-                        FileVersionInfo versInfo = FileVersionInfo.GetVersionInfo(clientInfo.FullName);
-                        if( versInfo != null && !string.IsNullOrEmpty(versInfo.FileVersion) )
+                        var versionInfo = FileVersionInfo.GetVersionInfo(clientInfo.FullName);
+                        if (!string.IsNullOrEmpty(versionInfo.FileVersion))
                         {
-                            version = versInfo.FileVersion.Replace(",", ".").Replace(" ", "").ToLower();
+                            version = versionInfo.FileVersion.Replace(",", ".").Replace(" ", "").ToLower();
                             return true;
                         }
                     }
                 }
-
             }
 
             version = null;
@@ -35,65 +33,71 @@ namespace UOLandscape.Client
         {
             version = 0;
 
-            if( !string.IsNullOrEmpty(versionText) )
+            if (!string.IsNullOrEmpty(versionText))
             {
                 versionText = versionText.ToLower();
 
-                string[] buff = versionText.ToLower().Split(new char[1] { '.' });
-
-                if( buff.Length <= 2 || buff.Length > 4 )
-                    return false;
-
-                if( int.TryParse(buff[0], out var major) && major >= byte.MinValue && major <= byte.MaxValue )
+                var buff = versionText.ToLower().Split('.');
+                if (buff.Length <= 2 || buff.Length > 4)
                 {
-                    int extra = 0;
+                    return false;
+                }
 
-                    if( int.TryParse(buff[1], out var minor) && minor >= byte.MinValue && minor <= byte.MaxValue )
+                if (int.TryParse(buff[0], out var major) && major >= byte.MinValue && major <= byte.MaxValue)
+                {
+                    var extra = 0;
+
+                    if (int.TryParse(buff[1], out var minor) && minor >= byte.MinValue && minor <= byte.MaxValue)
                     {
-                        int extra_index = 2;
-                        int build = 0;
+                        var extraIndex = 2;
+                        var build = 0;
 
-                        if( buff.Length == 4 )
+                        if (buff.Length == 4)
                         {
-                            if( !(int.TryParse(buff[extra_index], out build) && build >= byte.MinValue && build <= byte.MaxValue) )
+                            if (!(int.TryParse(buff[extraIndex], out build) && build >= byte.MinValue && build <= byte.MaxValue))
                             {
                                 return false;
                             }
 
-                            extra_index++;
+                            extraIndex++;
                         }
 
-                        int i = 0;
+                        var i = 0;
 
-                        for( ; i < buff[extra_index].Length; i++ )
+                        for (; i < buff[extraIndex].Length; i++)
                         {
-                            char c = buff[extra_index][i];
+                            var c = buff[extraIndex][i];
 
-                            if( char.IsLetter(c) )
+                            if (char.IsLetter(c))
                             {
                                 extra = (byte) c;
                                 break;
                             }
                         }
 
-                        if( extra != 0 )
+                        if (extra != 0)
                         {
-                            if( buff[extra_index].Length - i > 1 )
+                            if (buff[extraIndex].Length - i > 1)
+                            {
                                 return false;
+                            }
                         }
-                        else if( i <= 0 )
-                            return false;
-
-                        if( !(int.TryParse(buff[extra_index].Substring(0, i), out int num_extra) && num_extra >= byte.MinValue && num_extra <= byte.MaxValue) )
+                        else if (i <= 0)
                         {
                             return false;
                         }
 
-                        if( extra != 0 )
+                        if (!(int.TryParse(buff[extraIndex].Substring(0, i), out var numExtra) &&
+                              numExtra >= byte.MinValue && numExtra <= byte.MaxValue))
                         {
-                            char start = 'a';
-                            int index = 0;
-                            while( start != extra && start <= 'z' )
+                            return false;
+                        }
+
+                        if (extra != 0)
+                        {
+                            var start = 'a';
+                            var index = 0;
+                            while (start != extra && start <= 'z')
                             {
                                 start++;
                                 index++;
@@ -102,18 +106,18 @@ namespace UOLandscape.Client
                             extra = index;
                         }
 
-                        if( extra_index == 2 )
+                        if (extraIndex == 2)
                         {
-                            build = num_extra;
-                            num_extra = extra;
+                            build = numExtra;
+                            numExtra = extra;
                         }
 
-                        version = (ClientVersion) (((major & 0xFF) << 24) | ((minor & 0xFF) << 16) | ((build & 0xFF) << 8) | (num_extra & 0xFF));
+                        version = (ClientVersion) (((major & 0xFF) << 24) | ((minor & 0xFF) << 16) |
+                                                   ((build & 0xFF) << 8) | (numExtra & 0xFF));
 
                         return true;
                     }
                 }
-
             }
 
             return false;

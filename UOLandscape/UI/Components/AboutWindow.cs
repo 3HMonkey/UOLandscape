@@ -2,7 +2,7 @@
 
 namespace UOLandscape.UI.Components
 {
-    internal sealed class AboutWindowComponent : IAboutWindow
+    internal sealed class AboutWindow : IAboutWindow
     {
         private bool _isActive;
 

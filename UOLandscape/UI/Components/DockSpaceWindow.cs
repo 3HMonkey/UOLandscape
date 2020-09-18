@@ -3,7 +3,7 @@ using Num = System.Numerics;
 
 namespace UOLandscape.UI.Components
 {
-    internal sealed class DockSpaceComponent : IDockspaceWindow
+    internal sealed class DockSpaceWindow : IDockSpaceWindow
     {
         private bool _isActive;
         public bool IsActive => _isActive;
