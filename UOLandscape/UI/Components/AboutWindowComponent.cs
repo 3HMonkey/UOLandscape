@@ -12,7 +12,7 @@ namespace UOLandscape.UI.Components
 
         public static bool Show(uint dockspaceID)
         {
-            ImGui.SetNextWindowDockID(dockspaceID, ImGuiCond.FirstUseEver);
+            ImGui.SetNextWindowDockID(ImGui.GetID("MyDockSpace"), ImGuiCond.FirstUseEver);
             ImGui.SetNextWindowSize(new System.Numerics.Vector2(560, 450));
             if( ImGui.Begin("About", ref IsActive) )
             {

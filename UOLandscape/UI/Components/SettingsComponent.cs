@@ -19,11 +19,11 @@ namespace UOLandscape.UI.Components
 
         private static string _inputText = _currentPath;
        
-        public static bool Show(uint dockspaceID)
+        public static bool Show()
         {
-            ImGui.SetNextWindowDockID(dockspaceID, ImGuiCond.FirstUseEver);
+            
             ImGui.SetNextWindowSize(new System.Numerics.Vector2(500, 130));
-            if( ImGui.Begin("Settings", ref IsActive) )
+            if( ImGui.Begin("Settings", ref IsActive, ImGuiWindowFlags.NoResize) )
             {
                 ImGui.TextUnformatted("Ultima Online Path");
                 ImGui.InputText("##PathBox", ref _inputText, 100);

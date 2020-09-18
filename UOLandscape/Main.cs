@@ -14,8 +14,9 @@ namespace UOLandscape
         private ImGUIRenderer _imGuiRenderer;
         private Texture2D _xnaTexture;
         private IntPtr _imGuiTexture;
+        public static uint MainDockspaceID = 0;
 
-        
+
         public Main()
         {
 
@@ -90,14 +91,15 @@ namespace UOLandscape
         }
 
 
-        uint dockspaceID = 0;
-        private bool show_test_window = false;
+        
         private Num.Vector3 clear_color = new Num.Vector3(114f / 255f, 144f / 255f, 154f / 255f);
 
         
 
         protected virtual void ImGuiLayout()
         {
+            if( SettingsComponent.IsActive ) SettingsComponent.Show();
+
             if( !SettingsComponent.IsActive)
             {
                 // Menu
@@ -131,30 +133,36 @@ namespace UOLandscape
                     if( ImGui.BeginMenu("View") )
                     {
                         if( ImGui.MenuItem("Info Box", null, InfoOverlayComponent.IsActive, true) ) InfoOverlayComponent.IsActive = !InfoOverlayComponent.IsActive;
+                        if( ImGui.MenuItem("Tools", null, ToolComponent.IsActive, true) ) ToolComponent.IsActive = !ToolComponent.IsActive;
                         ImGui.EndMenu();
                     }
                     ImGui.EndMainMenuBar();
                 }
+                
+                if( DockSpaceComponent.IsActive ) DockSpaceComponent.Show();
+                if( InfoOverlayComponent.IsActive ) InfoOverlayComponent.Show();
+                if( ToolComponent.IsActive ) ToolComponent.Show();
+                if( NewProjectComponent.IsActive ) NewProjectComponent.Show(MainDockspaceID);
+                if( AboutWindowComponent.IsActive ) AboutWindowComponent.Show(MainDockspaceID);
             }
 
-            if( InfoOverlayComponent.IsActive ) InfoOverlayComponent.Show();
-            if( NewProjectComponent.IsActive ) NewProjectComponent.Show(dockspaceID);
-            if( SettingsComponent.IsActive ) SettingsComponent.Show(dockspaceID);
-            if( AboutWindowComponent.IsActive ) AboutWindowComponent.Show(dockspaceID);
+            
+           
 
+            
 
-            if( ImGui.Begin("GameWindow") )
-            {
-                // Using a Child allow to fill all the space of the window.
-                // It also alows customization
-                ImGui.BeginChild("GameRender");
-                // Get the size of the child (i.e. the whole draw size of the windows).
-                Num.Vector2 wsize = ImGui.GetWindowSize();
-                // Because I use the texture from OpenGL, I need to invert the V from the UV.
-                ImGui.Image(_imGuiTexture, wsize);
-                ImGui.EndChild();
-                ImGui.End();
-            }
+            //if( ImGui.Begin("GameWindow") )
+            //{
+            //    // Using a Child allow to fill all the space of the window.
+            //    // It also alows customization
+            //    ImGui.BeginChild("GameRender");
+            //    // Get the size of the child (i.e. the whole draw size of the windows).
+            //    Num.Vector2 wsize = ImGui.GetWindowSize();
+            //    // Because I use the texture from OpenGL, I need to invert the V from the UV.
+            //    ImGui.Image(_imGuiTexture, wsize);
+            //    ImGui.EndChild();
+            //    ImGui.End();
+            //}
 
 
 
