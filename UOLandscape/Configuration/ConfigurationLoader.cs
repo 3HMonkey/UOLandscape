@@ -1,16 +1,17 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 
 namespace UOLandscape.Configuration
 {
-    internal sealed class ConfigurationLoader : IConfigurationLoader
+    public sealed class ConfigurationLoader : IConfigurationLoader
     {
         private readonly ILogger _logger;
 
         public ConfigurationLoader(ILogger<ConfigurationLoader> logger)
         {
-            _logger = logger;
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         public T LoadConfiguration<T>(string fileName) where T : class
