@@ -1,5 +1,4 @@
 ﻿using ImGuiNET;
-using Microsoft.Extensions.Logging;
 using UOLandscape.Client;
 using UOLandscape.Configuration;
 
@@ -32,6 +31,8 @@ namespace UOLandscape.UI.Components
             _isActive = !_isActive;
         }
 
+        private string _ultimaOnlinePath;
+
         public bool Show(uint dockSpaceId)
         {
             ImGui.SetNextWindowSize(new System.Numerics.Vector2(500, 130));
@@ -39,11 +40,14 @@ namespace UOLandscape.UI.Components
             {
                 ImGui.TextUnformatted("Ultima Online Path");
                 var ultimaOnlinePath = _appSettingsProvider.AppSettings.UltimaOnlinePath;
-                ImGui.InputText("##PathBox", ref ultimaOnlinePath, 100);
-
-                if (string.IsNullOrEmpty(_appSettingsProvider.AppSettings.UltimaOnlinePath))
+                if (ImGui.InputText("##PathBox", ref ultimaOnlinePath, 128))
                 {
-                    ImGui.TextUnformatted(_appSettingsProvider.AppSettings.UltimaOnlinePath);
+                    _ultimaOnlinePath = ultimaOnlinePath;
+                }
+
+                if (!string.IsNullOrEmpty(_ultimaOnlinePath))
+                {
+                    ImGui.TextUnformatted(_ultimaOnlinePath);
                 }
                 else
                 {
@@ -52,7 +56,7 @@ namespace UOLandscape.UI.Components
 
                 if (ImGui.Button("Save"))
                 {
-                    _appSettingsProvider.AppSettings.UltimaOnlinePath = ultimaOnlinePath;
+                    _appSettingsProvider.AppSettings.UltimaOnlinePath = _ultimaOnlinePath;
                     _appSettingsProvider.Save();
                 }
 
