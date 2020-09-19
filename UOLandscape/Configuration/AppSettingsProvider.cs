@@ -18,7 +18,7 @@
 
         public void Load()
         {
-            AppSettings = _configurationLoader.LoadConfiguration<AppSettings>("config.json");
+            AppSettings = _configurationLoader.LoadConfiguration<AppSettings>("config.json") ?? new AppSettings();
         }
 
         public void Save()

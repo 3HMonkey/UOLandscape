@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Microsoft.Extensions.Logging;
+using UOLandscape.Configuration;
 using UOLandscape.UI;
 using UOLandscape.UI.Components;
 using Num = System.Numerics;
@@ -12,6 +13,7 @@ namespace UOLandscape
     internal sealed class MainGame : Game
     {
         private readonly ILogger<MainGame> _logger;
+        private readonly IAppSettingsProvider _appSettingsProvider;
         private readonly IUIService _uiService;
         public GraphicsDeviceManager _graphics;
         private ImGuiRenderer _imGuiRenderer;
@@ -21,10 +23,13 @@ namespace UOLandscape
         private readonly Texture2D[] _hues_sampler = new Texture2D[2];
         private Num.Vector3 _clearColor = new Num.Vector3(114f / 255f, 144f / 255f, 154f / 255f);
 
-        public MainGame(ILogger<MainGame> logger, IUIService uiService)
+        public MainGame(ILogger<MainGame> logger, IAppSettingsProvider appSettingsProvider, IUIService uiService)
         {
             _logger = logger;
+            _appSettingsProvider = appSettingsProvider;
             _uiService = uiService;
+
+            _appSettingsProvider.Load();
 
             Content.RootDirectory = "Content";
             Window.AllowUserResizing = true;
@@ -148,7 +153,7 @@ namespace UOLandscape
 
                 if (_uiService.DockSpaceWindow.IsActive)
                 {
-                    _uiService.DockSpaceWindow.Show(0);
+                    _uiService.DockSpaceWindow.Show(MainDockspaceID);
                 }
 
                 if (_uiService.InfoOverlayWindow.IsActive)

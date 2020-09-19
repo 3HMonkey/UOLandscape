@@ -1,6 +1,4 @@
-﻿using UOLandscape.Client;
-
-namespace UOLandscape.Configuration
+﻿namespace UOLandscape.Configuration
 {
     internal sealed class AppSettings
     {

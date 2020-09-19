@@ -18,6 +18,7 @@ namespace UOLandscape.Configuration
             if (!File.Exists(fileName))
             {
                 _logger.LogWarning($"Configuration file: '{fileName}' does not exist.");
+                return null;
             }
 
             _logger.LogInformation($"Loading Configuration {fileName}...");

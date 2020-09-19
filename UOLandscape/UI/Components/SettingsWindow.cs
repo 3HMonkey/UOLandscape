@@ -18,6 +18,7 @@ namespace UOLandscape.UI.Components
             IClient client)
         {
             _appSettingsProvider = appSettingsProvider;
+            _ultimaOnlinePath = _appSettingsProvider.AppSettings.UltimaOnlinePath;
             _client = client;
         }
 
@@ -39,7 +40,7 @@ namespace UOLandscape.UI.Components
             if (ImGui.Begin("Settings", ref _isActive, ImGuiWindowFlags.NoResize))
             {
                 ImGui.TextUnformatted("Ultima Online Path");
-                var ultimaOnlinePath = _appSettingsProvider.AppSettings.UltimaOnlinePath;
+                var ultimaOnlinePath = _ultimaOnlinePath;
                 if (ImGui.InputText("##PathBox", ref ultimaOnlinePath, 128))
                 {
                     _ultimaOnlinePath = ultimaOnlinePath;
