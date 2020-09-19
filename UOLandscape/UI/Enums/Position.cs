@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace UOLandscape.UI.Enums
+﻿namespace UOLandscape.UI.Enums
 {
     public enum Position
     {
@@ -13,7 +7,6 @@ namespace UOLandscape.UI.Enums
         TopRight = 1,
         BottomLeft = 2,
         BottomRight = 3
-
     }
-   
+
 }

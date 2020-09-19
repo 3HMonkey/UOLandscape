@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace UOLandscape.Client
 {
     [Flags]
-    enum ClientFlags : uint
+    internal enum ClientFlags : uint
     {
         CF_T2A = 0x00,
         CF_RE = 0x01,

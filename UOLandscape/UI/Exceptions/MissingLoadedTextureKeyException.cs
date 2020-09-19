@@ -2,19 +2,15 @@
 
 namespace UOLandscape.UI.Exceptions
 {
-    public class MissingLoadedTextureKeyException
-        : InvalidOperationException
+    public class MissingLoadedTextureKeyException : InvalidOperationException
     {
-        public override string Message
+        public MissingLoadedTextureKeyException(IntPtr textureId)
         {
-            get { return string.Format("Could not find a texture with id {0}, please check your bindings", _texture_id); }
+            _textureId = textureId;
         }
 
-        public MissingLoadedTextureKeyException(IntPtr texture_id)
-        {
-            _texture_id = texture_id;
-        }
+        public override string Message => $"Could not find a texture with id {_textureId}, please check your bindings";
 
-        private readonly IntPtr _texture_id;
+        private readonly IntPtr _textureId;
     }
 }
