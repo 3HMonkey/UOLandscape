@@ -12,6 +12,11 @@ namespace UOLandscape.UI.Components
         static bool _optPadding = false;
         static ImGuiDockNodeFlags _dockspaceFlags = ImGuiDockNodeFlags.None;
 
+        public DockSpaceWindow()
+        {
+            _isActive = true;
+        }
+
         public void Hide()
         {
             _isActive = false;

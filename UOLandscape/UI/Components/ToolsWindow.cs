@@ -8,6 +8,11 @@ namespace UOLandscape.UI.Components
 
         public bool IsActive => _isActive;
 
+        public ToolsWindow()
+        {
+            _isActive = true;
+        }
+
         public void Hide()
         {
             _isActive = false;
@@ -22,7 +27,7 @@ namespace UOLandscape.UI.Components
         {
             ImGui.SetNextWindowSize(new System.Numerics.Vector2(100, 450));
 
-            if (ImGui.Begin("Tools", ref _isActive, ImGuiWindowFlags.NoResize))
+            if( ImGui.Begin("Tools", ref _isActive, ImGuiWindowFlags.NoResize) )
             {
                 ImGui.End();
                 return true;

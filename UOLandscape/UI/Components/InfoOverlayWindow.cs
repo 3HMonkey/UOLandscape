@@ -12,6 +12,11 @@ namespace UOLandscape.UI.Components
 
         public bool IsActive => _isActive;
 
+        public InfoOverlayWindow()
+        {
+            _isActive = true;
+        }
+
         public void Hide()
         {
             _isActive = false;

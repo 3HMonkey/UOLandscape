@@ -17,6 +17,7 @@ namespace UOLandscape.UI.Components
             IAppSettingsProvider appSettingsProvider,
             IClient client)
         {
+            _isActive = true;
             _appSettingsProvider = appSettingsProvider;
             _ultimaOnlinePath = _appSettingsProvider.AppSettings.UltimaOnlinePath;
             _client = client;

@@ -12,6 +12,7 @@
             _configurationLoader = configurationLoader;
             _configurationSaver = configurationSaver;
             AppSettings = new AppSettings();
+            this.Load();
         }
 
         public AppSettings AppSettings { get; private set; }
