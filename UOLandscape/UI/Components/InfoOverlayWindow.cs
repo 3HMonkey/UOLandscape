@@ -57,9 +57,9 @@ namespace UOLandscape.UI.Components
                                ImGuiWindowFlags.NoFocusOnAppearing | ImGuiWindowFlags.NoNav;
             if (_position != Position.Custom)
                 window_flags |= ImGuiWindowFlags.NoMove;
-            if (ImGui.Begin("Example: Simple overlay", ref _isActive, window_flags))
+            if (ImGui.Begin("Info Overlay", ref _isActive, window_flags))
             {
-                ImGui.Text(@"My example overlay");
+                ImGui.Text($"Application average \n{(int)(1000.0f / ImGui.GetIO().Framerate)} ms/frame ({(int)(ImGui.GetIO().Framerate)} FPS)");
                 ImGui.Separator();
                 ImGui.Text(ImGui.IsMousePosValid()
                     ? $"Mouse Position: ({io.MousePos.X},{io.MousePos.Y})"
