@@ -166,6 +166,11 @@ namespace UOLandscape
                     _uiService.ToolsWindow.Show(0);
                 }
 
+                if( _uiService.DebugWindow.IsActive )
+                {
+                    _uiService.DebugWindow.Show(0);
+                }
+
                 if (_uiService.NewProjectWindow.IsActive)
                 {
                     _uiService.NewProjectWindow.Show(MainDockspaceID);

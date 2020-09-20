@@ -1,4 +1,6 @@
-﻿namespace UOLandscape.UI
+﻿using UOLandscape.UI.Components;
+
+namespace UOLandscape.UI
 {
     internal interface IUIService
     {
@@ -13,5 +15,7 @@
         public IInfoOverlayWindow InfoOverlayWindow { get; }
 
         public IAboutWindow AboutWindow { get; }
+
+        public IDebugWindow DebugWindow { get; }
     }
 }
