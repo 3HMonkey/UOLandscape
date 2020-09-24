@@ -1,4 +1,5 @@
-﻿using ImGuiNET;
+﻿using System.Reflection;
+using ImGuiNET;
 
 namespace UOLandscape.UI.Components
 {
@@ -25,7 +26,7 @@ namespace UOLandscape.UI.Components
             if (ImGui.Begin("About", ref _isActive))
             {
                 ImGui.Text($@"
-UOLandscaper {UOLandscapeEnvironment.Version.ToString()}
+UOLandscaper {Assembly.GetExecutingAssembly().GetName().Version}
 
 UOLandscaper is a modern landscape editor and creator tool for Ultima Online. 
 This editor helps you to easily develop maps and content for your game.

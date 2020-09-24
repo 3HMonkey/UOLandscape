@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Runtime.InteropServices;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Console;
@@ -56,7 +57,7 @@ namespace UOLandscape
 
         private static void SetupDllPaths()
         {
-            if (UOLandscapeEnvironment.IsUnix)
+            if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
                 return;
             }
