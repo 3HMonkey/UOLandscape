@@ -198,7 +198,7 @@ namespace UOLandscape.Artwork
                         lookups[i] = (lookupStart + (bin.ReadUInt16() * 2));
                     }
 
-                    var texture = new Texture2D(graphicsdevice, width, height);
+                    var texture = new Texture2D(graphicsdevice, width, height, false, SurfaceFormat.Bgra5551);
                     //var texture = Texture.New2D(GraphicsDevice, width, height, PixelFormat.B5G5R5A1_UNorm);
                     var buffer = new ushort[width * height];
 
