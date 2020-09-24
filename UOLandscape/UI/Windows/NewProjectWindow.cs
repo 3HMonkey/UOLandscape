@@ -3,34 +3,20 @@ using UOLandscape.Configuration;
 
 namespace UOLandscape.UI.Windows
 {
-    internal sealed class NewProjectWindow : INewProjectWindow
+    internal sealed class NewProjectWindow : Window, INewProjectWindow
     {
         private readonly IAppSettingsProvider _appSettingsProvider;
-
-        private bool _isActive;
-        public bool IsVisible => _isActive;
-
 
         public NewProjectWindow(IAppSettingsProvider appSettingsProvider)
         {
             _appSettingsProvider = appSettingsProvider;
         }
 
-        public void Hide()
-        {
-            _isActive = false;
-        }
-
-        public void ToggleVisibility()
-        {
-            _isActive = !_isActive;
-        }
-       
-        public bool Show(uint dockspaceId)
+        public override bool Show(uint dockspaceId)
         {
             ImGui.SetNextWindowDockID(dockspaceId, ImGuiCond.FirstUseEver);
 
-            if (ImGui.Begin("Settings", ref _isActive))
+            if (ImGui.Begin("Settings", ref _isVisible))
             {
                 ImGui.TextUnformatted("Ultima Online Path");
 

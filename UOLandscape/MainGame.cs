@@ -15,7 +15,7 @@ namespace UOLandscape
     {
         private readonly ILogger<MainGame> _logger;
         private readonly IAppSettingsProvider _appSettingsProvider;
-        private readonly IUIService _uiService;
+        private readonly IWindowService _windowService;
         public GraphicsDeviceManager _graphics;
         private ImGuiRenderer _imGuiRenderer;
         private Texture2D _xnaTexture;
@@ -25,11 +25,11 @@ namespace UOLandscape
         private readonly Texture2D[] _hues_sampler = new Texture2D[2];
         private Num.Vector3 _clearColor = new Num.Vector3(114f / 255f, 144f / 255f, 154f / 255f);
 
-        public MainGame(ILogger<MainGame> logger, IAppSettingsProvider appSettingsProvider, IUIService uiService)
+        public MainGame(ILogger<MainGame> logger, IAppSettingsProvider appSettingsProvider, IWindowService windowService)
         {
             _logger = logger;
             _appSettingsProvider = appSettingsProvider;
-            _uiService = uiService;
+            _windowService = windowService;
 
             _appSettingsProvider.Load();
 
@@ -93,12 +93,12 @@ namespace UOLandscape
 
         private void ImGuiLayout()
         {
-            if( _uiService.SettingsWindow.IsVisible )
+            if( _windowService.SettingsWindow.IsVisible )
             {
-                _uiService.SettingsWindow.Show(0);
+                _windowService.SettingsWindow.Show(0);
             }
 
-            if( !_uiService.SettingsWindow.IsVisible )
+            if( !_windowService.SettingsWindow.IsVisible )
             {
                 // Menu
                 if( ImGui.BeginMainMenuBar() )
@@ -113,7 +113,7 @@ namespace UOLandscape
                     {
                         if( ImGui.MenuItem("Settings", null, false, true) )
                         {
-                            _uiService.SettingsWindow.ToggleVisibility();
+                            _windowService.SettingsWindow.ToggleVisibility();
 
                         }
                         //ImGui.MenuItem("New", "Ctrl+N", true, show_test_window);
@@ -130,7 +130,7 @@ namespace UOLandscape
                     {
                         if( ImGui.MenuItem("About", null, false, true) )
                         {
-                            _uiService.AboutWindow.ToggleVisibility();
+                            _windowService.AboutWindow.ToggleVisibility();
                         }
                         //ImGui.MenuItem("New", "Ctrl+N", true, show_test_window);
                         //ImGui.MenuItem("New", "Ctrl+N", true, show_test_window);
@@ -140,13 +140,13 @@ namespace UOLandscape
 
                     if( ImGui.BeginMenu("View") )
                     {
-                        if( ImGui.MenuItem("Info Box", null, _uiService.InfoOverlayWindow.IsVisible, true) )
+                        if( ImGui.MenuItem("Info Box", null, _windowService.InfoOverlayWindow.IsVisible, true) )
                         {
-                            _uiService.InfoOverlayWindow.ToggleVisibility();
+                            _windowService.InfoOverlayWindow.ToggleVisibility();
                         }
-                        if( ImGui.MenuItem("Tools", null, _uiService.ToolsWindow.IsVisible, true) )
+                        if( ImGui.MenuItem("Tools", null, _windowService.ToolsWindow.IsVisible, true) )
                         {
-                            _uiService.ToolsWindow.ToggleVisibility();
+                            _windowService.ToolsWindow.ToggleVisibility();
                         }
                         ImGui.EndMenu();
                     }
@@ -154,41 +154,41 @@ namespace UOLandscape
                     ImGui.EndMainMenuBar();
                 }
 
-                if( _uiService.DockSpaceWindow.IsVisible )
+                if( _windowService.DockSpaceWindow.IsVisible )
                 {
-                    _uiService.DockSpaceWindow.Show(MainDockspaceID);
+                    _windowService.DockSpaceWindow.Show(MainDockspaceID);
                 }
 
-                if( _uiService.InfoOverlayWindow.IsVisible )
+                if( _windowService.InfoOverlayWindow.IsVisible )
                 {
-                    _uiService.InfoOverlayWindow.Show(0);
+                    _windowService.InfoOverlayWindow.Show(0);
                 }
 
-                if( _uiService.ToolsWindow.IsVisible )
+                if( _windowService.ToolsWindow.IsVisible )
                 {
-                    _uiService.ToolsWindow.Show(0);
+                    _windowService.ToolsWindow.Show(0);
                 }
 
-                if( _uiService.DebugWindow.IsVisible )
+                if( _windowService.DebugWindow.IsVisible )
                 {
-                    _uiService.DebugWindow.Show(0);
+                    _windowService.DebugWindow.Show(0);
                 }
 
-                if( _uiService.NewProjectWindow.IsVisible )
+                if( _windowService.NewProjectWindow.IsVisible )
                 {
-                    _uiService.NewProjectWindow.Show(MainDockspaceID);
+                    _windowService.NewProjectWindow.Show(MainDockspaceID);
                 }
 
-                if( _uiService.AboutWindow.IsVisible )
+                if( _windowService.AboutWindow.IsVisible )
                 {
-                    _uiService.AboutWindow.Show(MainDockspaceID);
+                    _windowService.AboutWindow.Show(MainDockspaceID);
                 }
             }
 
             //##############################################################
             //##############################################################
             //TESTCASE CALLING TEST ARTWORKPROVIDER CLASS
-            if( !_uiService.SettingsWindow.IsVisible )
+            if( !_windowService.SettingsWindow.IsVisible )
             {
                 if( ArtworkProvider.Length > 0 )
                 {

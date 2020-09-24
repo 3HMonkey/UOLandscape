@@ -3,27 +3,13 @@ using ImGuiNET;
 
 namespace UOLandscape.UI.Windows
 {
-    internal sealed class AboutWindow : IAboutWindow
+    internal sealed class AboutWindow : Window, IAboutWindow
     {
-        private bool _isActive;
-
-        public bool IsVisible => _isActive;
-
-        public void Hide()
-        {
-            _isActive = false;
-        }
-
-        public void ToggleVisibility()
-        {
-            _isActive = !_isActive;
-        }
-
-        public bool Show(uint dockSpaceId)
+        public override bool Show(uint dockSpaceId)
         {
             ImGui.SetNextWindowDockID(ImGui.GetID("MyDockSpace"), ImGuiCond.FirstUseEver);
             ImGui.SetNextWindowSize(new System.Numerics.Vector2(560, 450));
-            if (ImGui.Begin("About", ref _isActive))
+            if (ImGui.Begin("About", ref _isVisible))
             {
                 ImGui.Text($@"
 UOLandscaper {Assembly.GetExecutingAssembly().GetName().Version}

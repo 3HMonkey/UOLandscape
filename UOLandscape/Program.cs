@@ -37,7 +37,7 @@ namespace UOLandscape
             services.AddSingleton<ISettingsWindow, SettingsWindow>();
             services.AddSingleton<IToolsWindow, ToolsWindow>();
             services.AddSingleton<IDebugWindow, DebugWindow>();
-            services.AddSingleton<IUIService, UIService>();
+            services.AddSingleton<IWindowService, WindowService>();
             services.AddSingleton<IClient, Client.Client>();
             services.AddSingleton<MainGame>();
 

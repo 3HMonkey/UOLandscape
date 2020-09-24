@@ -4,41 +4,27 @@ using UOLandscape.Configuration;
 
 namespace UOLandscape.UI.Windows
 {
-    internal sealed class SettingsWindow : ISettingsWindow
+    internal sealed class SettingsWindow : Window, ISettingsWindow
     {
         private readonly IAppSettingsProvider _appSettingsProvider;
         private readonly IClient _client;
-
-        private bool _isActive;
-
-        public bool IsVisible => _isActive;
 
         public SettingsWindow(
             IAppSettingsProvider appSettingsProvider,
             IClient client)
         {
-            _isActive = true;
+            _isVisible = true;
             _appSettingsProvider = appSettingsProvider;
             _ultimaOnlinePath = _appSettingsProvider.AppSettings.UltimaOnlinePath;
             _client = client;
         }
 
-        public void Hide()
-        {
-            _isActive = false;
-        }
-
-        public void ToggleVisibility()
-        {
-            _isActive = !_isActive;
-        }
-
         private string _ultimaOnlinePath;
 
-        public bool Show(uint dockSpaceId)
+        public override bool Show(uint dockSpaceId)
         {
             ImGui.SetNextWindowSize(new System.Numerics.Vector2(500, 130));
-            if (ImGui.Begin("Settings", ref _isActive, ImGuiWindowFlags.NoResize))
+            if (ImGui.Begin("Settings", ref _isVisible, ImGuiWindowFlags.NoResize))
             {
                 ImGui.TextUnformatted("Ultima Online Path");
                 var ultimaOnlinePath = _ultimaOnlinePath;

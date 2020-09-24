@@ -2,32 +2,18 @@
 
 namespace UOLandscape.UI.Windows
 {
-    internal sealed class ToolsWindow : IToolsWindow
+    internal sealed class ToolsWindow : Window, IToolsWindow
     {
-        private bool _isActive;
-
-        public bool IsVisible => _isActive;
-
         public ToolsWindow()
         {
-            _isActive = true;
+            _isVisible = true;
         }
 
-        public void Hide()
-        {
-            _isActive = false;
-        }
-
-        public void ToggleVisibility()
-        {
-            _isActive = !_isActive;
-        }
-
-        public bool Show(uint dockSpaceId)
+        public override bool Show(uint dockSpaceId)
         {
             ImGui.SetNextWindowSize(new System.Numerics.Vector2(100, 450));
 
-            if( ImGui.Begin("Tools", ref _isActive, ImGuiWindowFlags.NoResize) )
+            if (ImGui.Begin("Tools", ref _isVisible, ImGuiWindowFlags.NoResize))
             {
                 ImGui.End();
                 return true;
