@@ -2,9 +2,9 @@
 
 namespace UOLandscape.UI.Exceptions
 {
-    public class MissingLoadedTextureKeyException : InvalidOperationException
+    public class ImGuiMissingLoadedTextureKeyException : InvalidOperationException
     {
-        public MissingLoadedTextureKeyException(IntPtr textureId)
+        public ImGuiMissingLoadedTextureKeyException(IntPtr textureId)
         {
             _textureId = textureId;
         }

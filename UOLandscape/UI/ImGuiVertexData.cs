@@ -2,10 +2,7 @@
 
 namespace UOLandscape.UI.Data
 {
-    /// <summary>
-    /// Contains information regarding the vertex buffer used by the GUIRenderer.
-    /// </summary>
-    public class VertexData
+    public class ImGuiVertexData
     {
         public byte[] Data;
         public int BufferSize;
