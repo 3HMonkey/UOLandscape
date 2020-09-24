@@ -121,7 +121,7 @@ namespace UOLandscape.Artwork
             {
                 using( var bin = new BinaryReader(stream) )
                 {
-                    var texture = new Texture2D(graphicsdevice, 44, 44);
+                    var texture = new Texture2D(graphicsdevice, 44, 44, false, SurfaceFormat.Bgra5551);
                     var buffer = new ushort[44 * 44];
 
                     var xOffset = 21;
@@ -199,7 +199,6 @@ namespace UOLandscape.Artwork
                     }
 
                     var texture = new Texture2D(graphicsdevice, width, height, false, SurfaceFormat.Bgra5551);
-                    //var texture = Texture.New2D(GraphicsDevice, width, height, PixelFormat.B5G5R5A1_UNorm);
                     var buffer = new ushort[width * height];
 
                     fixed( ushort* start = buffer )
