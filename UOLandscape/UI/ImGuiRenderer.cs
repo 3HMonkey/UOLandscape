@@ -8,11 +8,16 @@ using UOLandscape.UI.Exceptions;
 
 namespace UOLandscape.UI
 {
-    /// <summary>
-    /// Responsible for rendering the ImGui elements to the screen.
-    /// </summary>
     public sealed class ImGuiRenderer
     {
+
+        private readonly IndexData _index;
+        private readonly VertexData _vertex;
+        private readonly InputData _inputData;
+        private readonly TextureData _textureData;
+        private readonly BasicEffect _effect;
+        private readonly RasterizerState _rasterizerState;
+
         public Game Owner { get; }
         public GraphicsDevice GraphicsDevice => Owner.GraphicsDevice;
 
@@ -228,12 +233,5 @@ namespace UOLandscape.UI
             _vertex.Buffer.SetData(_vertex.Data, 0, drawData.TotalVtxCount * DrawVertDeclaration.Size);
             _index.Buffer.SetData(_index.Data, 0, drawData.TotalIdxCount * sizeof(ushort));
         }
-
-        private readonly IndexData _index;
-        private readonly VertexData _vertex;
-        private readonly InputData _inputData;
-        private readonly TextureData _textureData;
-        private readonly BasicEffect _effect;
-        private readonly RasterizerState _rasterizerState;
     }
 }
