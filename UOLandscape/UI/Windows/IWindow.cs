@@ -1,6 +1,6 @@
 ﻿namespace UOLandscape.UI.Windows
 {
-    public interface IUIComponent
+    public interface IWindow
     {
         bool IsVisible { get; }
 

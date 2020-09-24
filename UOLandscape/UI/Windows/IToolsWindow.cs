@@ -1,6 +1,6 @@
 ﻿namespace UOLandscape.UI.Windows
 {
-    internal interface IToolsWindow : IUIComponent
+    internal interface IToolsWindow : IWindow
     {
     }
 }

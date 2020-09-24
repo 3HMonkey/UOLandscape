@@ -1,6 +1,6 @@
 ﻿namespace UOLandscape.UI.Windows
 {
-    internal interface IDebugWindow: IUIComponent
+    internal interface IDebugWindow: IWindow
     {
     }
 }
