@@ -11,7 +11,7 @@ namespace UOLandscape.UI.Windows
 
         private bool _isActive;
 
-        public bool IsActive => _isActive;
+        public bool IsVisible => _isActive;
 
         public SettingsWindow(
             IAppSettingsProvider appSettingsProvider,
@@ -28,7 +28,7 @@ namespace UOLandscape.UI.Windows
             _isActive = false;
         }
 
-        public void ToggleActive()
+        public void ToggleVisibility()
         {
             _isActive = !_isActive;
         }

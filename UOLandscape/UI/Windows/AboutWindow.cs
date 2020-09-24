@@ -7,14 +7,14 @@ namespace UOLandscape.UI.Windows
     {
         private bool _isActive;
 
-        public bool IsActive => _isActive;
+        public bool IsVisible => _isActive;
 
         public void Hide()
         {
             _isActive = false;
         }
 
-        public void ToggleActive()
+        public void ToggleVisibility()
         {
             _isActive = !_isActive;
         }

@@ -10,7 +10,7 @@ namespace UOLandscape.UI.Windows
         private List<string> _debugListBuffer;
 
         public List<string> Entries => _debugListBuffer;
-        public bool IsActive => _isActive;
+        public bool IsVisible => _isActive;
         public bool AutoScroll => _autoScroll;
 
         public DebugWindow()
@@ -29,7 +29,7 @@ namespace UOLandscape.UI.Windows
             _isActive = false;
         }
 
-        public void ToggleActive()
+        public void ToggleVisibility()
         {
             _isActive = !_isActive;
         }

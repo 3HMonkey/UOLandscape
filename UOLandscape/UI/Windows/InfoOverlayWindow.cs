@@ -10,7 +10,7 @@ namespace UOLandscape.UI.Windows
 
         private bool _isActive;
 
-        public bool IsActive => _isActive;
+        public bool IsVisible => _isActive;
 
         public InfoOverlayWindow()
         {
@@ -22,7 +22,7 @@ namespace UOLandscape.UI.Windows
             _isActive = false;
         }
 
-        public void ToggleActive()
+        public void ToggleVisibility()
         {
             _isActive = !_isActive;
         }
@@ -80,7 +80,7 @@ namespace UOLandscape.UI.Windows
                     {
                         _position = Position.BottomRight;
                     }
-                    if (IsActive && ImGui.MenuItem("Close"))
+                    if (IsVisible && ImGui.MenuItem("Close"))
                     {
                         Hide();
                     }

@@ -2,11 +2,11 @@
 {
     public interface IUIComponent
     {
-        bool IsActive { get; }
+        bool IsVisible { get; }
 
         void Hide();
 
-        void ToggleActive();
+        void ToggleVisibility();
 
         bool Show(uint dockSpaceId);
     }

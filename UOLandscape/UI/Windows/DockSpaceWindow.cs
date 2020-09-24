@@ -6,7 +6,7 @@ namespace UOLandscape.UI.Windows
     internal sealed class DockSpaceWindow : IDockSpaceWindow
     {
         private bool _isActive;
-        public bool IsActive => _isActive;
+        public bool IsVisible => _isActive;
 
         static bool _optFullscreen = true;
         static bool _optPadding = false;
@@ -22,7 +22,7 @@ namespace UOLandscape.UI.Windows
             _isActive = false;
         }
 
-        public void ToggleActive()
+        public void ToggleVisibility()
         {
             _isActive = !_isActive;
         }

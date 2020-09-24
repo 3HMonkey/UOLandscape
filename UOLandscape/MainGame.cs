@@ -93,19 +93,19 @@ namespace UOLandscape
 
         private void ImGuiLayout()
         {
-            if( _uiService.SettingsWindow.IsActive )
+            if( _uiService.SettingsWindow.IsVisible )
             {
                 _uiService.SettingsWindow.Show(0);
             }
 
-            if( !_uiService.SettingsWindow.IsActive )
+            if( !_uiService.SettingsWindow.IsVisible )
             {
                 // Menu
                 if( ImGui.BeginMainMenuBar() )
                 {
                     if( ImGui.BeginMenu("Menu") )
                     {
-                        //if( ImGui.MenuItem("New", "Ctrl+N", false, true) ) NewProjectWindow.IsActive = !NewProjectWindow.IsActive;
+                        //if( ImGui.MenuItem("New", "Ctrl+N", false, true) ) NewProjectWindow.IsVisible = !NewProjectWindow.IsVisible;
                         ImGui.EndMenu();
                     }
 
@@ -113,7 +113,7 @@ namespace UOLandscape
                     {
                         if( ImGui.MenuItem("Settings", null, false, true) )
                         {
-                            _uiService.SettingsWindow.ToggleActive();
+                            _uiService.SettingsWindow.ToggleVisibility();
 
                         }
                         //ImGui.MenuItem("New", "Ctrl+N", true, show_test_window);
@@ -130,7 +130,7 @@ namespace UOLandscape
                     {
                         if( ImGui.MenuItem("About", null, false, true) )
                         {
-                            _uiService.AboutWindow.ToggleActive();
+                            _uiService.AboutWindow.ToggleVisibility();
                         }
                         //ImGui.MenuItem("New", "Ctrl+N", true, show_test_window);
                         //ImGui.MenuItem("New", "Ctrl+N", true, show_test_window);
@@ -140,13 +140,13 @@ namespace UOLandscape
 
                     if( ImGui.BeginMenu("View") )
                     {
-                        if( ImGui.MenuItem("Info Box", null, _uiService.InfoOverlayWindow.IsActive, true) )
+                        if( ImGui.MenuItem("Info Box", null, _uiService.InfoOverlayWindow.IsVisible, true) )
                         {
-                            _uiService.InfoOverlayWindow.ToggleActive();
+                            _uiService.InfoOverlayWindow.ToggleVisibility();
                         }
-                        if( ImGui.MenuItem("Tools", null, _uiService.ToolsWindow.IsActive, true) )
+                        if( ImGui.MenuItem("Tools", null, _uiService.ToolsWindow.IsVisible, true) )
                         {
-                            _uiService.ToolsWindow.ToggleActive();
+                            _uiService.ToolsWindow.ToggleVisibility();
                         }
                         ImGui.EndMenu();
                     }
@@ -154,32 +154,32 @@ namespace UOLandscape
                     ImGui.EndMainMenuBar();
                 }
 
-                if( _uiService.DockSpaceWindow.IsActive )
+                if( _uiService.DockSpaceWindow.IsVisible )
                 {
                     _uiService.DockSpaceWindow.Show(MainDockspaceID);
                 }
 
-                if( _uiService.InfoOverlayWindow.IsActive )
+                if( _uiService.InfoOverlayWindow.IsVisible )
                 {
                     _uiService.InfoOverlayWindow.Show(0);
                 }
 
-                if( _uiService.ToolsWindow.IsActive )
+                if( _uiService.ToolsWindow.IsVisible )
                 {
                     _uiService.ToolsWindow.Show(0);
                 }
 
-                if( _uiService.DebugWindow.IsActive )
+                if( _uiService.DebugWindow.IsVisible )
                 {
                     _uiService.DebugWindow.Show(0);
                 }
 
-                if( _uiService.NewProjectWindow.IsActive )
+                if( _uiService.NewProjectWindow.IsVisible )
                 {
                     _uiService.NewProjectWindow.Show(MainDockspaceID);
                 }
 
-                if( _uiService.AboutWindow.IsActive )
+                if( _uiService.AboutWindow.IsVisible )
                 {
                     _uiService.AboutWindow.Show(MainDockspaceID);
                 }
@@ -188,7 +188,7 @@ namespace UOLandscape
             //##############################################################
             //##############################################################
             //TESTCASE CALLING TEST ARTWORKPROVIDER CLASS
-            if( !_uiService.SettingsWindow.IsActive )
+            if( !_uiService.SettingsWindow.IsVisible )
             {
                 if( ArtworkProvider.Length > 0 )
                 {
