@@ -198,21 +198,20 @@ namespace UOLandscape
                         ImGui.BeginChild("GameRender");
                                                
 
-                        var texture = ArtworkProvider.GetStatic(GraphicsDevice, 5);
+                        
                         if( _testTexture == null )
                         {
-
+                            var texture = ArtworkProvider.GetStatic(GraphicsDevice, 9);
                             _testTexture = texture;
                             var textureToRender = _imGuiRenderer.BindTexture(texture);
                             ImGui.Image(textureToRender, new Num.Vector2(44, 44));
                         }
-                        else if ( _testTexture.texture  != texture.texture )
+                        else
                         {
-                           
-                            _testTexture = texture;
-                            var textureToRender = _imGuiRenderer.BindTexture(texture);
-                            ImGui.Image(textureToRender, new Num.Vector2(44,44));
+                            var textureToRender = _imGuiRenderer.BindTexture(_testTexture);
+                            ImGui.Image(textureToRender, new Num.Vector2(44, 44));
                         }
+                        
                         
                         
 
