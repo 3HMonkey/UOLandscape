@@ -1,4 +1,4 @@
-﻿using UOLandscape.UI.Components;
+﻿using UOLandscape.UI.Windows;
 
 namespace UOLandscape.UI
 {

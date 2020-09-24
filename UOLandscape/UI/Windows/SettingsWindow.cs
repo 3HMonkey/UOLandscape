@@ -2,7 +2,7 @@
 using UOLandscape.Client;
 using UOLandscape.Configuration;
 
-namespace UOLandscape.UI.Components
+namespace UOLandscape.UI.Windows
 {
     internal sealed class SettingsWindow : ISettingsWindow
     {

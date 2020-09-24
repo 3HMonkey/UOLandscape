@@ -1,6 +1,6 @@
 ﻿using ImGuiNET;
 
-namespace UOLandscape.UI.Components
+namespace UOLandscape.UI.Windows
 {
     internal sealed class ToolsWindow : IToolsWindow
     {

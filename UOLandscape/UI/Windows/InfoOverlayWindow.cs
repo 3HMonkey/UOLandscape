@@ -2,7 +2,7 @@
 using UOLandscape.UI.Enums;
 using Num = System.Numerics;
 
-namespace UOLandscape.UI.Components
+namespace UOLandscape.UI.Windows
 {
     internal sealed class InfoOverlayWindow : IInfoOverlayWindow
     {

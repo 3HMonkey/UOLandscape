@@ -1,4 +1,4 @@
-﻿namespace UOLandscape.UI
+﻿namespace UOLandscape.UI.Windows
 {
     public interface IUIComponent
     {

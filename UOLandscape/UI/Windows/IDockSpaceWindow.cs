@@ -1,4 +1,4 @@
-﻿namespace UOLandscape.UI
+﻿namespace UOLandscape.UI.Windows
 {
     internal interface IDockSpaceWindow : IUIComponent
     {

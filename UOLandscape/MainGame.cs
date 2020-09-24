@@ -5,7 +5,6 @@ using System;
 using Microsoft.Extensions.Logging;
 using UOLandscape.Configuration;
 using UOLandscape.UI;
-using UOLandscape.UI.Components;
 using Num = System.Numerics;
 using UOLandscape.Artwork;
 using System.Drawing.Imaging;

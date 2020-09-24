@@ -1,7 +1,7 @@
 ﻿using ImGuiNET;
 using UOLandscape.Configuration;
 
-namespace UOLandscape.UI.Components
+namespace UOLandscape.UI.Windows
 {
     internal sealed class NewProjectWindow : INewProjectWindow
     {

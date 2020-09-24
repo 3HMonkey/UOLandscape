@@ -8,7 +8,7 @@ using UOLandscape.Client;
 using UOLandscape.Configuration;
 using UOLandscape.Native;
 using UOLandscape.UI;
-using UOLandscape.UI.Components;
+using UOLandscape.UI.Windows;
 
 namespace UOLandscape
 {
