@@ -354,3 +354,8 @@ MigrationBackup/
 
 # Rider
 .idea/
+
+!external/lib64/
+!external/osx/
+!external/vulkan/
+!external/x64/
