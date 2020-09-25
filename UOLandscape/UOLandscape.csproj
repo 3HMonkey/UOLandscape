@@ -1,40 +1,72 @@
 <Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
-    <ApplicationIcon>App.ico</ApplicationIcon>
-  </PropertyGroup>
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
+        <ApplicationIcon>App.ico</ApplicationIcon>
+    </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-  </PropertyGroup>
+    <PropertyGroup>
+        <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+        <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
+    </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-  </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+        <PlatformTarget>x64</PlatformTarget>
+    </PropertyGroup>
 
-  <ItemGroup>
-    <Compile Remove="Utility\**" />
-    <EmbeddedResource Remove="Utility\**" />
-    <None Remove="Utility\**" />
-  </ItemGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+        <PlatformTarget>x64</PlatformTarget>
+    </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="FNA.Package" Version="20.5.0" />
-    <PackageReference Include="ImGui.NET" Version="1.78.0" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="3.1.8" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.1.8" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="3.1.8" />
-    <PackageReference Include="Microsoft.Extensions.Logging" Version="3.1.8" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="3.1.8" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="3.1.8" />
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
-    <PackageReference Include="System.Drawing.Common" Version="4.7.0" />
-  </ItemGroup>
+    <ItemGroup>
+        <Compile Remove="Utility\**"/>
+        <EmbeddedResource Remove="Utility\**"/>
+        <None Remove="Utility\**"/>
+    </ItemGroup>
 
-  <ItemGroup>
-    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
-      <_Parameter1>UOLandscape.UnitTests</_Parameter1>
-    </AssemblyAttribute>
-  </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="ImGui.NET" Version="1.78.0"/>
+        <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="3.1.8"/>
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.1.8"/>
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="3.1.8"/>
+        <PackageReference Include="Microsoft.Extensions.Logging" Version="3.1.8"/>
+        <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="3.1.8"/>
+        <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="3.1.8"/>
+        <PackageReference Include="Newtonsoft.Json" Version="12.0.3"/>
+        <PackageReference Include="System.Drawing.Common" Version="4.7.0"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
+            <_Parameter1>UOLandscape.UnitTests</_Parameter1>
+        </AssemblyAttribute>
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\external\FNA\FNA.Core.csproj"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <FnaFiles_x64 Include="$(ProjectDir)..\external\x64\*.*"/>
+        <FnaFiles_lib64 Include="$(ProjectDir)..\external\lib64\*.*"/>
+        <FnaFiles_osx Include="$(ProjectDir)..\external\osx\*.*"/>
+        <FnaFiles_vulkan Include="$(ProjectDir)..\external\vulkan\icd.d\*.*"/>
+    </ItemGroup>
+
+    <Target Name="CopyExternalDeps_build" AfterTargets="Build">
+        <Copy SourceFiles="@(FnaFiles_x64)"
+              DestinationFolder="$(TargetDir)\x64\"
+              SkipUnchangedFiles="true"/>
+        <Copy SourceFiles="@(FnaFiles_lib64)"
+              DestinationFolder="$(TargetDir)\lib64\"
+              SkipUnchangedFiles="true"/>
+        <Copy SourceFiles="@(FnaFiles_osx)"
+              DestinationFolder="$(TargetDir)\osx\"
+              SkipUnchangedFiles="true"/>
+        <Copy SourceFiles="@(FnaFiles_vulkan)"
+              DestinationFolder="$(TargetDir)\vulkan\icd.d\"
+              SkipUnchangedFiles="true"/>
+    </Target>
 </Project>
