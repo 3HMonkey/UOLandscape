@@ -1,37 +1,26 @@
-﻿using ImGuiNET;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using ImGuiNET;
 
-namespace UOLandscape.UI.Components
+namespace UOLandscape.UI.Windows
 {
-    internal sealed class DebugWindow : IDebugWindow
+    internal sealed class DebugWindow : Window, IDebugWindow
     {
-        private bool _isActive;
         private bool _autoScroll;
         private List<string> _debugListBuffer;
 
         public List<string> Entries => _debugListBuffer;
-        public bool IsActive => _isActive;
+
         public bool AutoScroll => _autoScroll;
 
         public DebugWindow()
         {
             _debugListBuffer = new List<string>();
-            _isActive = true;
-            for( int i = 0; i < 30; i++ )
+            _isVisible = true;
+            for (int i = 0; i < 30; i++)
             {
-                _debugListBuffer.Add("This is a test text This is a test text This is a test text This is a test text This is a test text This is a test text");
+                _debugListBuffer.Add(
+                    "This is a test text This is a test text This is a test text This is a test text This is a test text This is a test text");
             }
-            
-        }
-
-        public void Hide()
-        {
-            _isActive = false;
-        }
-
-        public void ToggleActive()
-        {
-            _isActive = !_isActive;
         }
 
         public void Clear()
@@ -44,63 +33,62 @@ namespace UOLandscape.UI.Components
             _debugListBuffer.Add(newEntry);
         }
 
-        public bool Show(uint dockSpaceId)
+        public override bool Show(uint dockSpaceId)
         {
             //Initialize debug window
             ImGui.SetNextWindowSize(new System.Numerics.Vector2(450, 200));
-            if( !ImGui.Begin("Debug", ref _isActive) )
+            if (!ImGui.Begin("Debug", ref _isVisible))
             {
                 ImGui.End();
                 return false;
             }
 
             // Adds options to popup menu
-            if( ImGui.BeginPopup("Options") )
+            if (ImGui.BeginPopup("Options"))
             {
                 ImGui.Checkbox("Auto-scroll", ref _autoScroll);
                 ImGui.EndPopup();
             }
 
             // Main window
-            if( ImGui.Button("Options") )
+            if (ImGui.Button("Options"))
             {
                 ImGui.OpenPopup("Options");
             }
+
             ImGui.SameLine();
-            bool clear = ImGui.Button("Clear");
+            var clear = ImGui.Button("Clear");
             ImGui.SameLine();
-            bool copy = ImGui.Button("Copy");
+            var copy = ImGui.Button("Copy");
             ImGui.Separator();
 
             // Creates child component with scrolling
-            ImGui.BeginChild("ScrollBox", new System.Numerics.Vector2(0, 0), true, ImGuiWindowFlags.HorizontalScrollbar);
-            if( clear )
+            ImGui.BeginChild("ScrollBox", new System.Numerics.Vector2(0, 0), true,
+                ImGuiWindowFlags.HorizontalScrollbar);
+            if (clear)
             {
                 Clear();
             }
 
-            if( copy )
+            if (copy)
             {
                 ImGui.LogToClipboard();
             }
 
-            foreach( var line in _debugListBuffer )
+            foreach (var line in _debugListBuffer)
             {
                 ImGui.TextUnformatted(line);
-                
             }
 
-           
-            if( AutoScroll && ImGui.GetScrollY() >= ImGui.GetScrollMaxY() )
+
+            if (AutoScroll && ImGui.GetScrollY() >= ImGui.GetScrollMaxY())
             {
                 ImGui.SetScrollHereY(1.0f);
             }
-                
+
             ImGui.EndChild();
             ImGui.End();
             return true;
-
-
         }
     }
 }

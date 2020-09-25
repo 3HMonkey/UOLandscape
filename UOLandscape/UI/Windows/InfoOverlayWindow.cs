@@ -2,7 +2,7 @@
 using UOLandscape.UI.Enums;
 using Num = System.Numerics;
 
-namespace UOLandscape.UI.Components
+namespace UOLandscape.UI.Windows
 {
     internal sealed class InfoOverlayWindow : IInfoOverlayWindow
     {
@@ -10,7 +10,7 @@ namespace UOLandscape.UI.Components
 
         private bool _isActive;
 
-        public bool IsActive => _isActive;
+        public bool IsVisible => _isActive;
 
         public InfoOverlayWindow()
         {
@@ -22,7 +22,7 @@ namespace UOLandscape.UI.Components
             _isActive = false;
         }
 
-        public void ToggleActive()
+        public void ToggleVisibility()
         {
             _isActive = !_isActive;
         }
@@ -80,7 +80,7 @@ namespace UOLandscape.UI.Components
                     {
                         _position = Position.BottomRight;
                     }
-                    if (IsActive && ImGui.MenuItem("Close"))
+                    if (IsVisible && ImGui.MenuItem("Close"))
                     {
                         Hide();
                     }

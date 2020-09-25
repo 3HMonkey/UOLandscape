@@ -8,18 +8,23 @@ using UOLandscape.UI.Exceptions;
 
 namespace UOLandscape.UI
 {
-    /// <summary>
-    /// Responsible for rendering the ImGui elements to the screen.
-    /// </summary>
     public sealed class ImGuiRenderer
     {
+
+        private readonly ImGuiIndexData _imGuiIndex;
+        private readonly ImGuiVertexData _imGuiVertex;
+        private readonly ImguiInputHandler _imguiInputHandler;
+        private readonly ImGuiTextureData _imGuiTextureData;
+        private readonly BasicEffect _effect;
+        private readonly RasterizerState _rasterizerState;
+
         public Game Owner { get; }
         public GraphicsDevice GraphicsDevice => Owner.GraphicsDevice;
 
         public void BeginLayout(GameTime gameTime)
         {
             ImGui.GetIO().DeltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
-            _inputData.Update(GraphicsDevice);
+            _imguiInputHandler.Update(GraphicsDevice);
 
             ImGui.NewFrame();
         }
@@ -32,26 +37,26 @@ namespace UOLandscape.UI
 
         public IntPtr BindTexture(Texture2D texture)
         {
-            var id = new IntPtr(_textureData.GetTextureId());
-            _textureData.Loaded.Add(id, texture);
+            var id = new IntPtr(_imGuiTextureData.GetTextureId());
+            _imGuiTextureData.Loaded.Add(id, texture);
 
             return id;
         }
 
         public void UnbindTexture(IntPtr textureId)
         {
-            _textureData.Loaded.Remove(textureId);
+            _imGuiTextureData.Loaded.Remove(textureId);
         }
 
         public ImGuiRenderer(Game owner)
         {
             Owner = owner;
             _effect = new BasicEffect(owner.GraphicsDevice);
-            _textureData = new TextureData();
+            _imGuiTextureData = new ImGuiTextureData();
             _rasterizerState = RasterizerState.CullNone;
-            _inputData = new InputData();
-            _vertex = new VertexData();
-            _index = new IndexData();
+            _imguiInputHandler = new ImguiInputHandler();
+            _imGuiVertex = new ImGuiVertexData();
+            _imGuiIndex = new ImGuiIndexData();
         }
 
         public ImGuiRenderer Initialize()
@@ -59,7 +64,7 @@ namespace UOLandscape.UI
             var context = ImGui.CreateContext();
             ImGui.SetCurrentContext(context);
 
-            _inputData.Initialize(Owner);
+            _imguiInputHandler.Initialize(Owner);
             return this;
         }
 
@@ -74,14 +79,14 @@ namespace UOLandscape.UI
             var texture = new Texture2D(GraphicsDevice, width, height, false, SurfaceFormat.Color);
             texture.SetData(pixels);
 
-            if (_textureData.FontTextureId.HasValue)
+            if (_imGuiTextureData.FontTextureId.HasValue)
             {
-                UnbindTexture(_textureData.FontTextureId.Value);
+                UnbindTexture(_imGuiTextureData.FontTextureId.Value);
             }
 
-            _textureData.FontTextureId = BindTexture(texture);
+            _imGuiTextureData.FontTextureId = BindTexture(texture);
 
-            io.Fonts.SetTexID(_textureData.FontTextureId.Value);
+            io.Fonts.SetTexID(_imGuiTextureData.FontTextureId.Value);
             io.Fonts.ClearTexData();
             return this;
         }
@@ -114,8 +119,8 @@ namespace UOLandscape.UI
 
         private void RenderCommandLists(ImDrawDataPtr draw_data)
         {
-            GraphicsDevice.SetVertexBuffer(_vertex.Buffer);
-            GraphicsDevice.Indices = _index.Buffer;
+            GraphicsDevice.SetVertexBuffer(_imGuiVertex.Buffer);
+            GraphicsDevice.Indices = _imGuiIndex.Buffer;
 
             var vertexOffset = 0;
             var indexOffset = 0;
@@ -126,13 +131,13 @@ namespace UOLandscape.UI
                 {
                     var drawCommand = commandList.CmdBuffer[commandIndex];
 
-                    if (!_textureData.Loaded.ContainsKey(drawCommand.TextureId))
+                    if (!_imGuiTextureData.Loaded.ContainsKey(drawCommand.TextureId))
                     {
-                        throw new MissingLoadedTextureKeyException(drawCommand.TextureId);
+                        throw new ImGuiMissingLoadedTextureKeyException(drawCommand.TextureId);
                     }
 
                     GraphicsDevice.ScissorRectangle = GenerateScissorRect(drawCommand);
-                    var effect = UpdateEffect(_textureData.Loaded[drawCommand.TextureId]);
+                    var effect = UpdateEffect(_imGuiTextureData.Loaded[drawCommand.TextureId]);
 
                     foreach (var pass in effect.CurrentTechnique.Passes)
                     {
@@ -190,21 +195,21 @@ namespace UOLandscape.UI
                 return;
             }
 
-            if (drawData.TotalVtxCount > _vertex.BufferSize)
+            if (drawData.TotalVtxCount > _imGuiVertex.BufferSize)
             {
-                _vertex.Buffer?.Dispose();
-                _vertex.BufferSize = (int)(drawData.TotalVtxCount * 1.5f);
-                _vertex.Buffer = new VertexBuffer(GraphicsDevice, DrawVertDeclaration.Declaration, _vertex.BufferSize, BufferUsage.None);
-                _vertex.Data = new byte[_vertex.BufferSize * DrawVertDeclaration.Size];
+                _imGuiVertex.Buffer?.Dispose();
+                _imGuiVertex.BufferSize = (int)(drawData.TotalVtxCount * 1.5f);
+                _imGuiVertex.Buffer = new VertexBuffer(GraphicsDevice, DrawVertexDeclaration.Declaration, _imGuiVertex.BufferSize, BufferUsage.None);
+                _imGuiVertex.Data = new byte[_imGuiVertex.BufferSize * DrawVertexDeclaration.Size];
             }
 
-            if (drawData.TotalIdxCount > _index.BufferSize)
+            if (drawData.TotalIdxCount > _imGuiIndex.BufferSize)
             {
-                _index.Buffer?.Dispose();
+                _imGuiIndex.Buffer?.Dispose();
 
-                _index.BufferSize = (int)(drawData.TotalIdxCount * 1.5f);
-                _index.Buffer = new IndexBuffer(GraphicsDevice, IndexElementSize.SixteenBits, _index.BufferSize, BufferUsage.None);
-                _index.Data = new byte[_index.BufferSize * sizeof(ushort)];
+                _imGuiIndex.BufferSize = (int)(drawData.TotalIdxCount * 1.5f);
+                _imGuiIndex.Buffer = new IndexBuffer(GraphicsDevice, IndexElementSize.SixteenBits, _imGuiIndex.BufferSize, BufferUsage.None);
+                _imGuiIndex.Data = new byte[_imGuiIndex.BufferSize * sizeof(ushort)];
             }
 
             var vertexOffset = 0;
@@ -213,11 +218,11 @@ namespace UOLandscape.UI
             for (var i = 0; i < drawData.CmdListsCount; ++i)
             {
                 var commands = drawData.CmdListsRange[i];
-                fixed (void* vtxDstPtr = &_vertex.Data[vertexOffset * DrawVertDeclaration.Size])
-                fixed (void* idxDstPtr = &_index.Data[indexOffset * sizeof(ushort)])
+                fixed (void* vtxDstPtr = &_imGuiVertex.Data[vertexOffset * DrawVertexDeclaration.Size])
+                fixed (void* idxDstPtr = &_imGuiIndex.Data[indexOffset * sizeof(ushort)])
                 {
-                    Buffer.MemoryCopy((void*)commands.VtxBuffer.Data, vtxDstPtr, _vertex.Data.Length, commands.VtxBuffer.Size * DrawVertDeclaration.Size);
-                    Buffer.MemoryCopy((void*)commands.IdxBuffer.Data, idxDstPtr, _index.Data.Length, commands.IdxBuffer.Size * sizeof(ushort));
+                    Buffer.MemoryCopy((void*)commands.VtxBuffer.Data, vtxDstPtr, _imGuiVertex.Data.Length, commands.VtxBuffer.Size * DrawVertexDeclaration.Size);
+                    Buffer.MemoryCopy((void*)commands.IdxBuffer.Data, idxDstPtr, _imGuiIndex.Data.Length, commands.IdxBuffer.Size * sizeof(ushort));
                 }
 
                 vertexOffset += commands.VtxBuffer.Size;
@@ -225,15 +230,8 @@ namespace UOLandscape.UI
             }
 
             // Copy the managed byte arrays to the gpu vertex- and index buffers
-            _vertex.Buffer.SetData(_vertex.Data, 0, drawData.TotalVtxCount * DrawVertDeclaration.Size);
-            _index.Buffer.SetData(_index.Data, 0, drawData.TotalIdxCount * sizeof(ushort));
+            _imGuiVertex.Buffer.SetData(_imGuiVertex.Data, 0, drawData.TotalVtxCount * DrawVertexDeclaration.Size);
+            _imGuiIndex.Buffer.SetData(_imGuiIndex.Data, 0, drawData.TotalIdxCount * sizeof(ushort));
         }
-
-        private readonly IndexData _index;
-        private readonly VertexData _vertex;
-        private readonly InputData _inputData;
-        private readonly TextureData _textureData;
-        private readonly BasicEffect _effect;
-        private readonly RasterizerState _rasterizerState;
     }
 }

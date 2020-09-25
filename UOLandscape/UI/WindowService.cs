@@ -1,8 +1,8 @@
-﻿using UOLandscape.UI.Components;
+﻿using UOLandscape.UI.Windows;
 
 namespace UOLandscape.UI
 {
-    internal sealed class UIService : IUIService
+    internal sealed class WindowService : IWindowService
     {
         public ISettingsWindow SettingsWindow { get; }
         public IDockSpaceWindow DockSpaceWindow { get; }
@@ -12,7 +12,7 @@ namespace UOLandscape.UI
         public IAboutWindow AboutWindow { get; }
         public IDebugWindow DebugWindow { get; }
 
-        public UIService(
+        public WindowService(
             ISettingsWindow settingsWindow,
             IDockSpaceWindow dockSpaceWindow,
             INewProjectWindow newProjectWindow,

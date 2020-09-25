@@ -1,33 +1,20 @@
 ﻿using ImGuiNET;
 using Num = System.Numerics;
 
-namespace UOLandscape.UI.Components
+namespace UOLandscape.UI.Windows
 {
-    internal sealed class DockSpaceWindow : IDockSpaceWindow
+    internal sealed class DockSpaceWindow : Window, IDockSpaceWindow
     {
-        private bool _isActive;
-        public bool IsActive => _isActive;
-
         static bool _optFullscreen = true;
         static bool _optPadding = false;
         static ImGuiDockNodeFlags _dockspaceFlags = ImGuiDockNodeFlags.None;
 
         public DockSpaceWindow()
         {
-            _isActive = true;
+            _isVisible = true;
         }
 
-        public void Hide()
-        {
-            _isActive = false;
-        }
-
-        public void ToggleActive()
-        {
-            _isActive = !_isActive;
-        }
-
-        public bool Show(uint dockSpaceId)
+        public override bool Show(uint dockSpaceId)
         {
             var windowFlags = ImGuiWindowFlags.NoDocking;
             if (_optFullscreen)
@@ -63,7 +50,7 @@ namespace UOLandscape.UI.Components
                 ImGui.PushStyleVar(ImGuiStyleVar.WindowPadding, new Num.Vector2(0.0f, 0.0f));
             }
 
-            ImGui.Begin("DockSpace", ref _isActive, windowFlags);
+            ImGui.Begin("DockSpace", ref _isVisible, windowFlags);
             if (!_optPadding)
             {
                 ImGui.PopStyleVar();

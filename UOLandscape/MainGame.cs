@@ -5,7 +5,6 @@ using System;
 using Microsoft.Extensions.Logging;
 using UOLandscape.Configuration;
 using UOLandscape.UI;
-using UOLandscape.UI.Components;
 using Num = System.Numerics;
 using UOLandscape.Artwork;
 using System.Drawing.Imaging;
@@ -16,7 +15,7 @@ namespace UOLandscape
     {
         private readonly ILogger<MainGame> _logger;
         private readonly IAppSettingsProvider _appSettingsProvider;
-        private readonly IUIService _uiService;
+        private readonly IWindowService _windowService;
         public GraphicsDeviceManager _graphics;
         private ImGuiRenderer _imGuiRenderer;
         private Texture2D _xnaTexture;
@@ -26,11 +25,11 @@ namespace UOLandscape
         private readonly Texture2D[] _hues_sampler = new Texture2D[2];
         private Num.Vector3 _clearColor = new Num.Vector3(114f / 255f, 144f / 255f, 154f / 255f);
 
-        public MainGame(ILogger<MainGame> logger, IAppSettingsProvider appSettingsProvider, IUIService uiService)
+        public MainGame(ILogger<MainGame> logger, IAppSettingsProvider appSettingsProvider, IWindowService windowService)
         {
             _logger = logger;
             _appSettingsProvider = appSettingsProvider;
-            _uiService = uiService;
+            _windowService = windowService;
 
             _appSettingsProvider.Load();
 
@@ -94,19 +93,19 @@ namespace UOLandscape
 
         private void ImGuiLayout()
         {
-            if( _uiService.SettingsWindow.IsActive )
+            if( _windowService.SettingsWindow.IsVisible )
             {
-                _uiService.SettingsWindow.Show(0);
+                _windowService.SettingsWindow.Show(0);
             }
 
-            if( !_uiService.SettingsWindow.IsActive )
+            if( !_windowService.SettingsWindow.IsVisible )
             {
                 // Menu
                 if( ImGui.BeginMainMenuBar() )
                 {
                     if( ImGui.BeginMenu("Menu") )
                     {
-                        //if( ImGui.MenuItem("New", "Ctrl+N", false, true) ) NewProjectWindow.IsActive = !NewProjectWindow.IsActive;
+                        //if( ImGui.MenuItem("New", "Ctrl+N", false, true) ) NewProjectWindow.IsVisible = !NewProjectWindow.IsVisible;
                         ImGui.EndMenu();
                     }
 
@@ -114,7 +113,7 @@ namespace UOLandscape
                     {
                         if( ImGui.MenuItem("Settings", null, false, true) )
                         {
-                            _uiService.SettingsWindow.ToggleActive();
+                            _windowService.SettingsWindow.ToggleVisibility();
 
                         }
                         //ImGui.MenuItem("New", "Ctrl+N", true, show_test_window);
@@ -131,7 +130,7 @@ namespace UOLandscape
                     {
                         if( ImGui.MenuItem("About", null, false, true) )
                         {
-                            _uiService.AboutWindow.ToggleActive();
+                            _windowService.AboutWindow.ToggleVisibility();
                         }
                         //ImGui.MenuItem("New", "Ctrl+N", true, show_test_window);
                         //ImGui.MenuItem("New", "Ctrl+N", true, show_test_window);
@@ -141,13 +140,13 @@ namespace UOLandscape
 
                     if( ImGui.BeginMenu("View") )
                     {
-                        if( ImGui.MenuItem("Info Box", null, _uiService.InfoOverlayWindow.IsActive, true) )
+                        if( ImGui.MenuItem("Info Box", null, _windowService.InfoOverlayWindow.IsVisible, true) )
                         {
-                            _uiService.InfoOverlayWindow.ToggleActive();
+                            _windowService.InfoOverlayWindow.ToggleVisibility();
                         }
-                        if( ImGui.MenuItem("Tools", null, _uiService.ToolsWindow.IsActive, true) )
+                        if( ImGui.MenuItem("Tools", null, _windowService.ToolsWindow.IsVisible, true) )
                         {
-                            _uiService.ToolsWindow.ToggleActive();
+                            _windowService.ToolsWindow.ToggleVisibility();
                         }
                         ImGui.EndMenu();
                     }
@@ -155,41 +154,41 @@ namespace UOLandscape
                     ImGui.EndMainMenuBar();
                 }
 
-                if( _uiService.DockSpaceWindow.IsActive )
+                if( _windowService.DockSpaceWindow.IsVisible )
                 {
-                    _uiService.DockSpaceWindow.Show(MainDockspaceID);
+                    _windowService.DockSpaceWindow.Show(MainDockspaceID);
                 }
 
-                if( _uiService.InfoOverlayWindow.IsActive )
+                if( _windowService.InfoOverlayWindow.IsVisible )
                 {
-                    _uiService.InfoOverlayWindow.Show(0);
+                    _windowService.InfoOverlayWindow.Show(0);
                 }
 
-                if( _uiService.ToolsWindow.IsActive )
+                if( _windowService.ToolsWindow.IsVisible )
                 {
-                    _uiService.ToolsWindow.Show(0);
+                    _windowService.ToolsWindow.Show(0);
                 }
 
-                if( _uiService.DebugWindow.IsActive )
+                if( _windowService.DebugWindow.IsVisible )
                 {
-                    _uiService.DebugWindow.Show(0);
+                    _windowService.DebugWindow.Show(0);
                 }
 
-                if( _uiService.NewProjectWindow.IsActive )
+                if( _windowService.NewProjectWindow.IsVisible )
                 {
-                    _uiService.NewProjectWindow.Show(MainDockspaceID);
+                    _windowService.NewProjectWindow.Show(MainDockspaceID);
                 }
 
-                if( _uiService.AboutWindow.IsActive )
+                if( _windowService.AboutWindow.IsVisible )
                 {
-                    _uiService.AboutWindow.Show(MainDockspaceID);
+                    _windowService.AboutWindow.Show(MainDockspaceID);
                 }
             }
 
             //##############################################################
             //##############################################################
             //TESTCASE CALLING TEST ARTWORKPROVIDER CLASS
-            if( !_uiService.SettingsWindow.IsActive )
+            if( !_windowService.SettingsWindow.IsVisible )
             {
                 if( ArtworkProvider.Length > 0 )
                 {

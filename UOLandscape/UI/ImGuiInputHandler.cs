@@ -9,7 +9,7 @@ namespace UOLandscape.UI.Data
     /// <summary>
     /// Contains the GUIRenderer's input data elements.
     /// </summary>
-    public class InputData
+    public class ImguiInputHandler
     {
         public int Scrollwheel;
         public List<int> KeyMap;
@@ -42,7 +42,7 @@ namespace UOLandscape.UI.Data
             Scrollwheel = mouse.ScrollWheelValue;
         }
 
-        public InputData Initialize(Game game)
+        public ImguiInputHandler Initialize(Game game)
         {
             var io = ImGuiNET.ImGui.GetIO();
 
@@ -79,7 +79,7 @@ namespace UOLandscape.UI.Data
             return this;
         }
 
-        public InputData()
+        public ImguiInputHandler()
         {
             Scrollwheel = 0;
             KeyMap = new List<int>();

@@ -3,12 +3,12 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace UOLandscape.UI
 {
-    public static class DrawVertDeclaration
+    public static class DrawVertexDeclaration
     {
         public static readonly int Size;
         public static readonly VertexDeclaration Declaration;
 
-        static DrawVertDeclaration()
+        static DrawVertexDeclaration()
         {
             unsafe { Size = sizeof(ImDrawVert); }
 

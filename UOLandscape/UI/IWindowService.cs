@@ -1,8 +1,8 @@
-﻿using UOLandscape.UI.Components;
+﻿using UOLandscape.UI.Windows;
 
 namespace UOLandscape.UI
 {
-    internal interface IUIService
+    internal interface IWindowService
     {
         public ISettingsWindow SettingsWindow { get; }
 

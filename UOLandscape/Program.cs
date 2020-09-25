@@ -8,7 +8,7 @@ using UOLandscape.Client;
 using UOLandscape.Configuration;
 using UOLandscape.Native;
 using UOLandscape.UI;
-using UOLandscape.UI.Components;
+using UOLandscape.UI.Windows;
 
 namespace UOLandscape
 {
@@ -37,7 +37,7 @@ namespace UOLandscape
             services.AddSingleton<ISettingsWindow, SettingsWindow>();
             services.AddSingleton<IToolsWindow, ToolsWindow>();
             services.AddSingleton<IDebugWindow, DebugWindow>();
-            services.AddSingleton<IUIService, UIService>();
+            services.AddSingleton<IWindowService, WindowService>();
             services.AddSingleton<IClient, Client.Client>();
             services.AddSingleton<MainGame>();
 

@@ -4,21 +4,20 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace UOLandscape.UI.Data
 {
-    /// <summary>
-    /// Contains the GUIRenderer's texture data element.
-    /// </summary>
-    public class TextureData
+    public class ImGuiTextureData
     {
-        public int TextureId;
+        private int _textureId;
+
         public IntPtr? FontTextureId;
-        public Dictionary<IntPtr, Texture2D> Loaded;
+
+        public Dictionary<IntPtr, Texture2D> Loaded { get; }
 
         public int GetTextureId()
         {
-            return TextureId++;
+            return _textureId++;
         }
 
-        public TextureData()
+        public ImGuiTextureData()
         {
             Loaded = new Dictionary<IntPtr, Texture2D>();
         }
