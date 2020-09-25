@@ -42,7 +42,8 @@ namespace UOLandscape
 
             SetupDllPaths();
 
-            Environment.SetEnvironmentVariable("FNA_GRAPHICS_ENABLE_HIGHDPI", "1");
+            Environment.SetEnvironmentVariable("FNA3D_OPENGL_FORCE_CORE_PROFILE", "1");
+            Environment.SetEnvironmentVariable("FNA3D_FORCE_DRIVER", "OpenGL");
 
             var serviceProvider = services.BuildServiceProvider();
             var game = serviceProvider.GetService<MainGame>();
