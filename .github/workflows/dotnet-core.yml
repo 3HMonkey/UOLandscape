@@ -18,9 +18,9 @@ jobs:
       with:
         dotnet-version: 3.1.301
     - name: Checkout submodules
-      uses: srt32/git-actions@v0.0.3
+      uses: textbook/git-checkout-submodule-action@2.1.1
       with:
-        args: git submodule update --init --recursive
+        remote: true
     - name: Install dependencies
       run: dotnet restore
     - name: Build
