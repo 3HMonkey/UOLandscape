@@ -1,9 +1,9 @@
 ﻿using System;
 using System.IO;
 using FluentAssertions;
-using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using NSubstitute;
+using Serilog;
 using Xunit;
 
 namespace UOLandscape.UnitTests.ConfigurationLoader
@@ -13,7 +13,7 @@ namespace UOLandscape.UnitTests.ConfigurationLoader
         [Fact]
         public void Loading_Configuration_From_NotExistingPath_Will_Return_Null()
         {
-            var logger = Substitute.For<ILogger<Configuration.ConfigurationLoader>>();
+            var logger = Substitute.For<ILogger>();
             var configurationLoader = new Configuration.ConfigurationLoader(logger);
 
             configurationLoader
@@ -24,7 +24,7 @@ namespace UOLandscape.UnitTests.ConfigurationLoader
         [Fact]
         public void Loading_Configuration_From_ExistingPath_Will_Return_Null()
         {
-            var logger = Substitute.For<ILogger<Configuration.ConfigurationLoader>>();
+            var logger = Substitute.For<ILogger>();
             var configurationLoader = new Configuration.ConfigurationLoader(logger);
 
             using var testConfig = new TestConfig();

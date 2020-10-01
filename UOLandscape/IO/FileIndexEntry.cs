@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace UOLandscape.IO
+﻿namespace UOLandscape.IO
 {
     public struct FileIndexEntry
     {

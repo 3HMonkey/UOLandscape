@@ -2,18 +2,18 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
-using Microsoft.Extensions.Logging;
+using Microsoft.Xna.Framework.Input;
 using UOLandscape.Configuration;
 using UOLandscape.UI;
 using Num = System.Numerics;
 using UOLandscape.Artwork;
-using System.Drawing.Imaging;
+using Serilog;
 
 namespace UOLandscape
 {
     internal sealed class MainGame : Game
     {
-        private readonly ILogger<MainGame> _logger;
+        private readonly ILogger _logger;
         private readonly IAppSettingsProvider _appSettingsProvider;
         private readonly IWindowService _windowService;
         public GraphicsDeviceManager _graphics;
@@ -25,7 +25,7 @@ namespace UOLandscape
         private readonly Texture2D[] _hues_sampler = new Texture2D[2];
         private Num.Vector3 _clearColor = new Num.Vector3(114f / 255f, 144f / 255f, 154f / 255f);
 
-        public MainGame(ILogger<MainGame> logger, IAppSettingsProvider appSettingsProvider, IWindowService windowService)
+        public MainGame(ILogger logger, IAppSettingsProvider appSettingsProvider, IWindowService windowService)
         {
             _logger = logger;
             _appSettingsProvider = appSettingsProvider;
@@ -52,28 +52,19 @@ namespace UOLandscape
 
         protected override void Initialize()
         {
-            _logger.LogInformation("Initializing...");
+            _logger.Information("Initializing...");
             _imGuiRenderer = new ImGuiRenderer(this).Initialize().RebuildFontAtlas();
             ImGui.GetIO().ConfigFlags = ImGuiConfigFlags.DockingEnable;
 
-            _logger.LogInformation("Initializing...Done");
+            _logger.Information("Initializing...Done");
             base.Initialize();
         }
 
         protected override void LoadContent()
         {
-            _logger.LogInformation("Loading Content...");
-            _xnaTexture = CreateTexture(GraphicsDevice, 300, 150, pixel =>
-            {
-                var red = (pixel % 300) / 2;
-                return new Color(red, 1, 1);
-            });
-            
-             _imGuiTexture = _imGuiRenderer.BindTexture(_xnaTexture);
-            
+            _logger.Information("Loading Content...");
             base.LoadContent();
-            _imGuiRenderer.UnbindTexture(_imGuiTexture);
-            _logger.LogInformation("Loading Content...Done");
+            _logger.Information("Loading Content...Done");
         }
 
         protected override void Draw(GameTime gameTime)
@@ -93,28 +84,27 @@ namespace UOLandscape
 
         private void ImGuiLayout()
         {
-            if( _windowService.SettingsWindow.IsVisible )
+            if (_windowService.SettingsWindow.IsVisible)
             {
                 _windowService.SettingsWindow.Show(0);
             }
 
-            if( !_windowService.SettingsWindow.IsVisible )
+            if (!_windowService.SettingsWindow.IsVisible)
             {
                 // Menu
-                if( ImGui.BeginMainMenuBar() )
+                if (ImGui.BeginMainMenuBar())
                 {
-                    if( ImGui.BeginMenu("Menu") )
+                    if (ImGui.BeginMenu("Menu"))
                     {
                         //if( ImGui.MenuItem("New", "Ctrl+N", false, true) ) NewProjectWindow.IsVisible = !NewProjectWindow.IsVisible;
                         ImGui.EndMenu();
                     }
 
-                    if( ImGui.BeginMenu("Options") )
+                    if (ImGui.BeginMenu("Options"))
                     {
-                        if( ImGui.MenuItem("Settings", null, false, true) )
+                        if (ImGui.MenuItem("Settings", null, false, true))
                         {
                             _windowService.SettingsWindow.ToggleVisibility();
-
                         }
                         //ImGui.MenuItem("New", "Ctrl+N", true, show_test_window);
                         //ImGui.MenuItem("New", "Ctrl+N", true, show_test_window);
@@ -126,60 +116,63 @@ namespace UOLandscape
                         ImGui.EndMenu();
                     }
 
-                    if( ImGui.BeginMenu("Help") )
+                    if (ImGui.BeginMenu("Help"))
                     {
-                        if( ImGui.MenuItem("About", null, false, true) )
+                        if (ImGui.MenuItem("About", null, false, true))
                         {
                             _windowService.AboutWindow.ToggleVisibility();
                         }
+
                         //ImGui.MenuItem("New", "Ctrl+N", true, show_test_window);
                         //ImGui.MenuItem("New", "Ctrl+N", true, show_test_window);
                         //ImGui.MenuItem("New", "Ctrl+N", true, show_test_window);
                         ImGui.EndMenu();
                     }
 
-                    if( ImGui.BeginMenu("View") )
+                    if (ImGui.BeginMenu("View"))
                     {
-                        if( ImGui.MenuItem("Info Box", null, _windowService.InfoOverlayWindow.IsVisible, true) )
+                        if (ImGui.MenuItem("Info Box", null, _windowService.InfoOverlayWindow.IsVisible, true))
                         {
                             _windowService.InfoOverlayWindow.ToggleVisibility();
                         }
-                        if( ImGui.MenuItem("Tools", null, _windowService.ToolsWindow.IsVisible, true) )
+
+                        if (ImGui.MenuItem("Tools", null, _windowService.ToolsWindow.IsVisible, true))
                         {
                             _windowService.ToolsWindow.ToggleVisibility();
                         }
+
                         ImGui.EndMenu();
                     }
 
                     ImGui.EndMainMenuBar();
                 }
 
-                if( _windowService.DockSpaceWindow.IsVisible )
+                if (_windowService.DockSpaceWindow.IsVisible)
                 {
                     _windowService.DockSpaceWindow.Show(MainDockspaceID);
                 }
 
-                if( _windowService.InfoOverlayWindow.IsVisible )
+                if (_windowService.InfoOverlayWindow.IsVisible)
                 {
                     _windowService.InfoOverlayWindow.Show(0);
                 }
 
-                if( _windowService.ToolsWindow.IsVisible )
+                if (_windowService.ToolsWindow.IsVisible)
                 {
                     _windowService.ToolsWindow.Show(0);
                 }
 
-                if( _windowService.DebugWindow.IsVisible )
+                if (_windowService.DebugWindow.IsVisible)
                 {
                     _windowService.DebugWindow.Show(0);
                 }
 
-                if( _windowService.NewProjectWindow.IsVisible )
+                if (_windowService.NewProjectWindow.IsVisible)
                 {
                     _windowService.NewProjectWindow.Show(MainDockspaceID);
                 }
 
-                if( _windowService.AboutWindow.IsVisible )
+                if (_windowService.AboutWindow.IsVisible)
                 {
                     _windowService.AboutWindow.Show(MainDockspaceID);
                 }
@@ -188,17 +181,16 @@ namespace UOLandscape
             //##############################################################
             //##############################################################
             //TESTCASE CALLING TEST ARTWORKPROVIDER CLASS
-            if( !_windowService.SettingsWindow.IsVisible )
+            if (!_windowService.SettingsWindow.IsVisible)
             {
-                if( ArtworkProvider.Length > 0 )
+                if (ArtworkProvider.Length > 0)
                 {
-                    if( ImGui.Begin("GameWindow") )
+                    if (ImGui.Begin("GameWindow"))
                     {
                         ImGui.BeginChild("GameRender");
-                                               
 
-                        
-                        if( _testTexture == null )
+
+                        if (_testTexture == null)
                         {
                             var texture = ArtworkProvider.GetStatic(GraphicsDevice, 9);
                             _testTexture = texture;
@@ -210,9 +202,7 @@ namespace UOLandscape
                             var textureToRender = _imGuiRenderer.BindTexture(_testTexture);
                             ImGui.Image(textureToRender, new Num.Vector2(44, 44));
                         }
-                        
-                        
-                        
+
 
                         ImGui.EndChild();
                         ImGui.End();
@@ -221,7 +211,6 @@ namespace UOLandscape
             }
             //##############################################################
             //##############################################################
-
 
 
             //if( ImGui.Begin("GameWindow") )
@@ -236,13 +225,13 @@ namespace UOLandscape
             //    ImGui.EndChild();
             //    ImGui.End();
             //}
-        }
+ }
 
         private static Texture2D CreateTexture(GraphicsDevice device, int width, int height, Func<int, Color> paint)
         {
             var texture = new Texture2D(device, width, height);
             var textureData = new Color[width * height];
-            for( var pixel = 0; pixel < textureData.Length; pixel++ )
+            for (var pixel = 0; pixel < textureData.Length; pixel++)
             {
                 textureData[pixel] = paint(pixel);
             }

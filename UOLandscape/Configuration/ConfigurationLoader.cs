@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
-using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using Serilog;
 
 namespace UOLandscape.Configuration
 {
@@ -9,7 +9,7 @@ namespace UOLandscape.Configuration
     {
         private readonly ILogger _logger;
 
-        public ConfigurationLoader(ILogger<ConfigurationLoader> logger)
+        public ConfigurationLoader(ILogger logger)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
@@ -18,13 +18,13 @@ namespace UOLandscape.Configuration
         {
             if (!File.Exists(fileName))
             {
-                _logger.LogWarning($"Configuration file: '{fileName}' does not exist.");
+                _logger.Warning($"Configuration file: '{fileName}' does not exist.");
                 return null;
             }
 
-            _logger.LogInformation($"Loading Configuration {fileName}...");
+            _logger.Information($"Loading Configuration {fileName}...");
             var configurationContent = File.ReadAllText(fileName);
-            _logger.LogInformation($"Loading Configuration {fileName}...Done.");
+            _logger.Information($"Loading Configuration {fileName}...Done.");
             return JsonConvert.DeserializeObject<T>(configurationContent);
         }
     }

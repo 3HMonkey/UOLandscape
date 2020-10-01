@@ -2,8 +2,7 @@
 using System.IO;
 using System.Runtime.InteropServices;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Logging.Console;
+using Serilog;
 using UOLandscape.Client;
 using UOLandscape.Configuration;
 using UOLandscape.Native;
@@ -14,19 +13,14 @@ namespace UOLandscape
 {
     internal class Program
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
             var services = new ServiceCollection();
-            services.AddLogging(loggingBuilder =>
-            {
-                loggingBuilder.ClearProviders();
-                loggingBuilder.AddConsole(consoleOptions =>
-                {
-                    consoleOptions.Format = ConsoleLoggerFormat.Systemd;
-                });
-                loggingBuilder.SetMinimumLevel(LogLevel.Trace);
-            });
+            var logger = new LoggerConfiguration()
+                .WriteTo.Console()
+                .CreateLogger();
 
+            services.AddSingleton<ILogger>(logger);
             services.AddSingleton<IAppSettingsProvider, AppSettingsProvider>();
             services.AddSingleton<IConfigurationLoader, ConfigurationLoader>();
             services.AddSingleton<IConfigurationSaver, ConfigurationSaver>();
@@ -46,13 +40,8 @@ namespace UOLandscape
             Environment.SetEnvironmentVariable("FNA_GRAPHICS_ENABLE_HIGHDPI", "1");
 
             var serviceProvider = services.BuildServiceProvider();
-            var game = serviceProvider.GetService<MainGame>();
+            using var game = serviceProvider.GetService<MainGame>();
             game.Run();
-        }
-
-        private static void Configure(ILoggingBuilder obj)
-        {
-            throw new NotImplementedException();
         }
 
         private static void SetupDllPaths()
@@ -62,18 +51,16 @@ namespace UOLandscape
                 return;
             }
 
+            var libsDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "libs");
             try
             {
                 Kernel32.SetDefaultDllDirectories(Kernel32.LoadLibrarySearchDefaultDirs);
-                Kernel32.AddDllDirectory(Path.Combine(AppDomain.CurrentDomain.BaseDirectory,
-                    Environment.Is64BitProcess ? "x64" : "x86"
-                ));
+                Kernel32.AddDllDirectory(Path.Combine(libsDirectory, Environment.Is64BitProcess ? "x64" : "x86"));
             }
             catch
             {
                 // Pre-Windows 7, KB2533623
-                Kernel32.SetDllDirectory(Path.Combine(AppDomain.CurrentDomain.BaseDirectory,
-                    Environment.Is64BitProcess ? "x64" : "x86"));
+                Kernel32.SetDllDirectory(Path.Combine(libsDirectory, Environment.Is64BitProcess ? "x64" : "x86"));
             }
         }
     }

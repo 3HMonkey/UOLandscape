@@ -1,23 +1,23 @@
 ﻿using System.IO;
-using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using Serilog;
 
 namespace UOLandscape.Configuration
 {
     internal sealed class ConfigurationSaver : IConfigurationSaver
     {
-        private readonly ILogger<ConfigurationSaver> _logger;
+        private readonly ILogger _logger;
 
-        public ConfigurationSaver(ILogger<ConfigurationSaver> logger)
+        public ConfigurationSaver(ILogger logger)
         {
             _logger = logger;
         }
         
         public void SaveConfiguration<T>(string fileName, T configuration) where T: class
         {
-            _logger.LogInformation($"Writing Configuration: {fileName}...");
+            _logger.Information($"Writing Configuration: {fileName}...");
             File.WriteAllText(fileName, JsonConvert.SerializeObject(configuration, Formatting.Indented));
-            _logger.LogInformation($"Writing Configuration: {fileName}...Done");
+            _logger.Information($"Writing Configuration: {fileName}...Done");
         }
     }
 }

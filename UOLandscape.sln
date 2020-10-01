@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UOLandscape", "UOLandscape\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UOLandscape.UnitTests", "UOLandscape.UnitTests\UOLandscape.UnitTests.csproj", "{A7681449-DFF3-4574-9F8E-688A5983523F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FNA.Core", "external\FNA\FNA.Core.csproj", "{FB578011-B1AC-4F50-BC00-D698EAA2CCFD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{A7681449-DFF3-4574-9F8E-688A5983523F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A7681449-DFF3-4574-9F8E-688A5983523F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A7681449-DFF3-4574-9F8E-688A5983523F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FB578011-B1AC-4F50-BC00-D698EAA2CCFD}.Debug|Any CPU.ActiveCfg = Debug|x64
+		{FB578011-B1AC-4F50-BC00-D698EAA2CCFD}.Debug|Any CPU.Build.0 = Debug|x64
+		{FB578011-B1AC-4F50-BC00-D698EAA2CCFD}.Release|Any CPU.ActiveCfg = Release|x64
+		{FB578011-B1AC-4F50-BC00-D698EAA2CCFD}.Release|Any CPU.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
