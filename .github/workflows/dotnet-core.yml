@@ -12,6 +12,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - name: Setup MSBuild Path
+      uses: warrenbuckley/Setup-MSBuild@v1
     #######################################
     - uses: actions/checkout@v2
     #######################################
