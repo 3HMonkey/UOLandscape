@@ -9,8 +9,8 @@ on:
 jobs:
   build:
 
-    runs-on: ubuntu-latest
-    #runs-on: windows-latest
+    #runs-on: ubuntu-latest
+    runs-on: windows-latest
     
     steps:
     #######################################
@@ -21,10 +21,10 @@ jobs:
       with:
         dotnet-version: 3.1.301
     #######################################
-    - name: Checkout submodules
-      uses: srt32/git-actions@v0.0.3
-      with:
-        args: git submodule update --init --recursive
+   # - name: Checkout submodules
+   #   uses: srt32/git-actions@v0.0.3
+   #   with:
+   #     args: git submodule update --init --recursive
     #######################################
     - name: Install dependencies
       run: dotnet restore
