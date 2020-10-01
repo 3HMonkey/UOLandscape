@@ -9,11 +9,9 @@ on:
 jobs:
   build:
 
-    runs-on: ubuntu-latest
-
-    steps:
-    - name: Setup MSBuild Path
-      uses: warrenbuckley/Setup-MSBuild@v1
+    #runs-on: ubuntu-latest
+    runs-on: windows-latest
+    
     #######################################
     - uses: actions/checkout@v2
     #######################################
