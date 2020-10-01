@@ -7,16 +7,32 @@ on:
     branches: [ master ]
 
 jobs:
-  
+###############################################################
+###############################################################
+# LINUX CONTAINER
+###############################################################
+###############################################################
+# This is needed to get all submodules. The process initializes
+# the submodules and upload them to a specified folder. The 
+# Windows container accesses this folder and downloads the content
+# to use it in build process  
   get_submodules:
     runs-on: ubuntu-latest
     steps:
+      #===========================================
       - uses: actions/checkout@v2
+      #===========================================
       - uses: textbook/git-checkout-submodule-action@2.1.1
+      #===========================================
       - uses: actions/upload-artifact@v2
         with:
           name: my-whole-src
           path: ./
+###############################################################
+###############################################################
+# WINDOWS CONTAINER
+###############################################################
+############################################################### 
   build:
     needs: [get_submodules]
     runs-on: windows-latest
