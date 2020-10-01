@@ -354,4 +354,7 @@ MigrationBackup/
 
 # Rider
 .idea/
-external/FNA/.git/
+!external/fnalibs/x86
+!external/fnalibs/x64
+!external/fnalibs/osx
+!external/fnalibs/vulkan
