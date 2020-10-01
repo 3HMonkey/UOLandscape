@@ -20,15 +20,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="FNA.Package" Version="20.5.0" />
     <PackageReference Include="ImGui.NET" Version="1.78.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="3.1.8" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.1.8" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="3.1.8" />
-    <PackageReference Include="Microsoft.Extensions.Logging" Version="3.1.8" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="3.1.8" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="3.1.8" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <PackageReference Include="Serilog" Version="2.10.0" />
+    <PackageReference Include="Serilog.Sinks.Console" Version="3.1.1" />
+    <PackageReference Include="Serilog.Sinks.RollingFile" Version="3.3.0" />
     <PackageReference Include="System.Drawing.Common" Version="4.7.0" />
   </ItemGroup>
 
@@ -37,4 +36,23 @@
       <_Parameter1>UOLandscape.UnitTests</_Parameter1>
     </AssemblyAttribute>
   </ItemGroup>
+
+  <Target Name="CreateLibsDirectory" AfterTargets="Build">
+    <MakeDir Directories="$(TargetDir)libs" />
+  </Target>
+
+  <ItemGroup>
+    <ThirdPartyLibraries Include="$(SolutionDir)external\fnalibs\x86\**\*.*" Condition=" '$(OS)' == 'Windows_NT' and '$(Prefer32Bit)' == 'true' " />
+    <ThirdPartyLibraries Include="$(SolutionDir)external\fnalibs\x64\**\*.*" Condition=" '$(OS)' == 'Windows_NT' and '$(Prefer32Bit)' == 'false' " />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\external\FNA\FNA.Core.csproj" />
+  </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="CreateLibsDirectory">
+    <Message Text="Copying ThirdPartyLibraries" />
+    <Copy SourceFiles="@(ThirdPartyLibraries)" DestinationFolder="$(TargetDir)libs\x86" SkipUnchangedFiles="true" OverwriteReadOnlyFiles="true" Retries="3" RetryDelayMilliseconds="300" Condition=" '$(OS)' == 'Windows_NT' and '$(Prefer32Bit)' == 'true' " />
+    <Copy SourceFiles="@(ThirdPartyLibraries)" DestinationFolder="$(TargetDir)libs\x64" SkipUnchangedFiles="true" OverwriteReadOnlyFiles="true" Retries="3" RetryDelayMilliseconds="300" Condition=" '$(OS)' == 'Windows_NT' and '$(Prefer32Bit)' == 'false' " />
+  </Target>  
 </Project>
