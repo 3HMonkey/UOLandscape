@@ -2,7 +2,7 @@
  
 ![example event parameter](https://github.com/3HMonkey/UOLandscape/workflows/.NET%20Core/badge.svg?branch=master)
 
-UOLandscape is a modern landscape editor and creator tool for Ultima Online. This editor helps you to easily develop maps and content for your game.
+UOLandscape is a modern landscape editor and creator tool for Ultima Online. This editor helps you to easily develop maps and content for your game. Furthermore there will be a toolset to convert between filetypes like UOP/MUL. 
 
 **AWARE: THIS IS ALPHA STAGE => NOT YET RUNNABLE AND/OR STABLE**
 
